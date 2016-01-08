@@ -8,11 +8,24 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class MainViewController: UIViewController {
 
+    @IBOutlet weak var addJobBtn: UIButton!
+    @IBOutlet weak var jobListBtn: UIButton!
+    @IBOutlet weak var settingsBtn: UIButton!
+    @IBOutlet weak var addJobLBL: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+
+        //setViewDefaults()
+        
+    }
+    
+    override func viewDidLayoutSubviews() {
+        //setViewDefaults()
     }
 
     override func didReceiveMemoryWarning() {
@@ -20,6 +33,11 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    
+    func setViewDefaults(){
+
+        
+    }
 
 }
 

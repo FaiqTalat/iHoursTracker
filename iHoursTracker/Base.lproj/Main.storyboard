@@ -1,25 +1,284 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="dYo-ic-l40">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="tne-QT-ifu">
+        <!--Settings-->
+        <scene sceneID="HVb-dR-0Iw">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="S2P-a0-MNe" customClass="SettingsVC" customModule="iHoursTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
-                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                        <viewControllerLayoutGuide type="top" id="eUv-v7-3pk"/>
+                        <viewControllerLayoutGuide type="bottom" id="hcQ-Ki-yPw"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                    <view key="view" contentMode="scaleToFill" id="0fu-zm-PZu">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Settings" id="qId-mD-Zpj"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Z2m-dB-0aq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="1240" y="221"/>
+        </scene>
+        <!--Jobs List-->
+        <scene sceneID="9KI-f6-dVs">
+            <objects>
+                <viewController id="IZP-v2-hdP" customClass="JobsListVC" customModule="iHoursTracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jX1-Cb-mp0"/>
+                        <viewControllerLayoutGuide type="bottom" id="Iew-Tl-jie"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="gxp-Dg-bFy">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Jobs List" id="YiC-yb-4xK"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Asw-h3-8pQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="564" y="221"/>
+        </scene>
+        <!--Add a job-->
+        <scene sceneID="wuf-Dd-cWf">
+            <objects>
+                <viewController id="DiL-LG-v8g" customClass="AddJobVC" customModule="iHoursTracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ng5-PI-lDf"/>
+                        <viewControllerLayoutGuide type="bottom" id="z0Q-X2-M6c"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="gdQ-sy-jzd">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add a job" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XJR-sc-cGb">
+                                <rect key="frame" x="0.0" y="20" width="600" height="35"/>
+                                <color key="backgroundColor" red="0.30196078430000001" green="0.63921568630000003" blue="0.45882352939999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="tj6-is-ooR"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="ChalkboardSE-Bold" family="Chalkboard SE" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Job Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8vX-0m-Iok" customClass="ITextField" customModule="iHoursTracker" customModuleProvider="target">
+                                <rect key="frame" x="20" y="75" width="560" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="1MK-Hc-Pr8"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="ChalkboardSE-Regular" family="Chalkboard SE" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Rate" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jFz-UU-uES" customClass="ITextField" customModule="iHoursTracker" customModuleProvider="target">
+                                <rect key="frame" x="20" y="130" width="390" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="fDM-YL-aAL"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="ChalkboardSE-Regular" family="Chalkboard SE" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gYz-Wp-1oV">
+                                <rect key="frame" x="430" y="110" width="150" height="70"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="70" id="UEj-qy-hQc"/>
+                                    <constraint firstAttribute="width" constant="150" id="a7t-7Z-m8M"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="dataSource" destination="DiL-LG-v8g" id="XlP-Gq-HCU"/>
+                                    <outlet property="delegate" destination="DiL-LG-v8g" id="maU-RV-Znb"/>
+                                </connections>
+                            </pickerView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="qlq-jh-9bS">
+                                <rect key="frame" x="159" y="190" width="283" height="29"/>
+                                <segments>
+                                    <segment title="Automatic - Tracking"/>
+                                    <segment title="Manual - Tracking"/>
+                                </segments>
+                                <color key="tintColor" red="0.30196078430000001" green="0.63921568630000003" blue="0.45882352939999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="locationSegmentControlStateChanged:" destination="DiL-LG-v8g" eventType="valueChanged" id="Mvn-ru-P20"/>
+                                </connections>
+                            </segmentedControl>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eLL-xI-VFb">
+                                <rect key="frame" x="250" y="511" width="100" height="35"/>
+                                <color key="backgroundColor" red="0.80401789030000004" green="0.80401789030000004" blue="0.80401789030000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="Vy4-KW-9Ff"/>
+                                    <constraint firstAttribute="height" constant="35" id="fjX-nt-UED"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="ChalkboardSE-Bold" family="Chalkboard SE" pointSize="15"/>
+                                <state key="normal" title="Add">
+                                    <color key="titleColor" cocoaTouchSystemColor="lightTextColor"/>
+                                </state>
+                            </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="GA8-M0-JQz" userLabel="searched places list">
+                                <rect key="frame" x="0.0" y="220" width="600" height="0.0"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" id="XxF-k1-AMt"/>
+                                </constraints>
+                                <color key="sectionIndexColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="DiL-LG-v8g" id="z8Y-vO-Tce"/>
+                                    <outlet property="delegate" destination="DiL-LG-v8g" id="11M-Nw-xph"/>
+                                </connections>
+                            </tableView>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pzu-30-dGz">
+                                <rect key="frame" x="0.0" y="226" width="600" height="277"/>
+                                <connections>
+                                    <segue destination="6xW-yG-Ymm" kind="embed" identifier="GotoSetLocationVC" id="ks6-5X-5mx"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.94777856691919193" green="0.94777856691919193" blue="0.94777856691919193" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="Pzu-30-dGz" secondAttribute="trailing" id="1dj-YZ-ahR"/>
+                            <constraint firstAttribute="trailing" secondItem="XJR-sc-cGb" secondAttribute="trailing" id="4XV-dG-lJA"/>
+                            <constraint firstItem="gYz-Wp-1oV" firstAttribute="top" secondItem="8vX-0m-Iok" secondAttribute="bottom" constant="5" id="64g-7f-dCQ"/>
+                            <constraint firstItem="jFz-UU-uES" firstAttribute="leading" secondItem="gdQ-sy-jzd" secondAttribute="leading" constant="20" id="Bp7-uC-SNn"/>
+                            <constraint firstItem="jFz-UU-uES" firstAttribute="centerY" secondItem="gYz-Wp-1oV" secondAttribute="centerY" id="CEa-8x-aZS"/>
+                            <constraint firstItem="z0Q-X2-M6c" firstAttribute="top" secondItem="eLL-xI-VFb" secondAttribute="bottom" constant="5" id="JCz-uo-RVW"/>
+                            <constraint firstItem="qlq-jh-9bS" firstAttribute="centerX" secondItem="gdQ-sy-jzd" secondAttribute="centerX" id="KI6-fW-S57"/>
+                            <constraint firstItem="XJR-sc-cGb" firstAttribute="leading" secondItem="gdQ-sy-jzd" secondAttribute="leading" id="SPb-IM-tiK"/>
+                            <constraint firstItem="z0Q-X2-M6c" firstAttribute="top" secondItem="Pzu-30-dGz" secondAttribute="bottom" constant="48" id="UUp-UV-Rym"/>
+                            <constraint firstItem="eLL-xI-VFb" firstAttribute="centerX" secondItem="gdQ-sy-jzd" secondAttribute="centerX" id="XQu-2k-mGX"/>
+                            <constraint firstAttribute="trailing" secondItem="gYz-Wp-1oV" secondAttribute="trailing" constant="20" id="cRm-6k-xuK"/>
+                            <constraint firstItem="Pzu-30-dGz" firstAttribute="leading" secondItem="gdQ-sy-jzd" secondAttribute="leading" id="dpS-jn-qOI"/>
+                            <constraint firstItem="gYz-Wp-1oV" firstAttribute="leading" secondItem="jFz-UU-uES" secondAttribute="trailing" constant="20" id="f31-5O-ry1"/>
+                            <constraint firstAttribute="trailing" secondItem="8vX-0m-Iok" secondAttribute="trailing" constant="20" id="ffz-vh-Oq7"/>
+                            <constraint firstItem="8vX-0m-Iok" firstAttribute="top" secondItem="XJR-sc-cGb" secondAttribute="bottom" constant="20" id="gaG-QY-4PT"/>
+                            <constraint firstItem="XJR-sc-cGb" firstAttribute="top" secondItem="ng5-PI-lDf" secondAttribute="bottom" id="guV-Ev-0sQ"/>
+                            <constraint firstItem="qlq-jh-9bS" firstAttribute="top" secondItem="gYz-Wp-1oV" secondAttribute="bottom" constant="10" id="iiH-v3-0Zd"/>
+                            <constraint firstItem="GA8-M0-JQz" firstAttribute="leading" secondItem="gdQ-sy-jzd" secondAttribute="leading" id="kV9-cw-mE3"/>
+                            <constraint firstItem="8vX-0m-Iok" firstAttribute="leading" secondItem="gdQ-sy-jzd" secondAttribute="leading" constant="20" id="pL8-hR-jdL"/>
+                            <constraint firstAttribute="trailing" secondItem="GA8-M0-JQz" secondAttribute="trailing" id="pW4-gc-XpV"/>
+                            <constraint firstItem="Pzu-30-dGz" firstAttribute="top" secondItem="qlq-jh-9bS" secondAttribute="bottom" constant="8" id="rMS-oY-f5q"/>
+                            <constraint firstItem="GA8-M0-JQz" firstAttribute="centerY" secondItem="gdQ-sy-jzd" secondAttribute="centerY" constant="-80" id="vu0-NX-gtv"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Add a job" id="FEb-9d-fly"/>
+                    <connections>
+                        <outlet property="addJobBtn" destination="eLL-xI-VFb" id="cGn-dr-fE9"/>
+                        <outlet property="jobName" destination="8vX-0m-Iok" id="Yj3-Qy-XRw"/>
+                        <outlet property="locationContainerView" destination="Pzu-30-dGz" id="qFI-fU-rNc"/>
+                        <outlet property="locationSegmentControl" destination="qlq-jh-9bS" id="aOk-GP-tPB"/>
+                        <outlet property="rateType" destination="gYz-Wp-1oV" id="D9B-DW-ck9"/>
+                        <outlet property="rateValue" destination="jFz-UU-uES" id="61o-K3-wJd"/>
+                        <outlet property="searchedPlacesTV" destination="GA8-M0-JQz" id="dno-jr-x05"/>
+                        <outlet property="topTitle" destination="XJR-sc-cGb" id="APE-9l-yd8"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cfg-22-R5j" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-119" y="221"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="crX-dJ-nia">
+            <objects>
+                <tabBarController id="dYo-ic-l40" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="iOj-FE-fhT">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="DiL-LG-v8g" kind="relationship" relationship="viewControllers" id="ctT-31-RMk"/>
+                        <segue destination="IZP-v2-hdP" kind="relationship" relationship="viewControllers" id="Fzc-zp-B3h"/>
+                        <segue destination="S2P-a0-MNe" kind="relationship" relationship="viewControllers" id="cdP-Nz-eJM"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TKj-iq-9SE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="564" y="-974"/>
+        </scene>
+        <!--Set LocationVC-->
+        <scene sceneID="vj3-61-G1n">
+            <objects>
+                <viewController id="6xW-yG-Ymm" customClass="SetLocationVC" customModule="iHoursTracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="meX-3e-AOX">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="277"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GEJ-ih-B7Q">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="277"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KGM-6h-kV1" userLabel="Content View">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="277"/>
+                                        <subviews>
+                                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="HCM-Ns-beW">
+                                                <rect key="frame" x="0.0" y="0.0" width="600" height="277"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="6xW-yG-Ymm" id="9hc-LY-7L5"/>
+                                                </connections>
+                                            </mapView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5jj-gM-piV" userLabel="Search Button">
+                                                <rect key="frame" x="10" y="10" width="20" height="20"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="20" id="MNo-cp-7ov"/>
+                                                    <constraint firstAttribute="width" constant="20" id="krm-ee-OUL"/>
+                                                </constraints>
+                                                <state key="normal" image="searchIcon"/>
+                                                <connections>
+                                                    <action selector="searchToggle" destination="6xW-yG-Ymm" eventType="touchUpInside" id="bCY-oh-nfJ"/>
+                                                </connections>
+                                            </button>
+                                            <searchBar contentMode="redraw" placeholder="Search a place" translatesAutoresizingMaskIntoConstraints="NO" id="THN-99-cKE">
+                                                <rect key="frame" x="0.0" y="0.0" width="0.0" height="44"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" id="e2F-rI-NnE"/>
+                                                </constraints>
+                                                <color key="barTintColor" red="0.30196078430000001" green="0.63921568630000003" blue="0.45882352939999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </searchBar>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="THN-99-cKE" firstAttribute="top" secondItem="KGM-6h-kV1" secondAttribute="top" id="5H3-nE-UBs"/>
+                                            <constraint firstAttribute="trailing" secondItem="HCM-Ns-beW" secondAttribute="trailing" id="Ld5-YE-rdN"/>
+                                            <constraint firstItem="HCM-Ns-beW" firstAttribute="top" secondItem="KGM-6h-kV1" secondAttribute="top" id="OUd-uX-qHS"/>
+                                            <constraint firstAttribute="bottom" secondItem="HCM-Ns-beW" secondAttribute="bottom" id="huN-hK-1zz"/>
+                                            <constraint firstItem="THN-99-cKE" firstAttribute="leading" secondItem="KGM-6h-kV1" secondAttribute="leading" id="vAX-jk-uUM"/>
+                                            <constraint firstItem="HCM-Ns-beW" firstAttribute="leading" secondItem="KGM-6h-kV1" secondAttribute="leading" id="w5k-Nl-cvV"/>
+                                            <constraint firstItem="5jj-gM-piV" firstAttribute="leading" secondItem="KGM-6h-kV1" secondAttribute="leading" constant="10" id="xcp-n5-1zR"/>
+                                            <constraint firstItem="5jj-gM-piV" firstAttribute="top" secondItem="KGM-6h-kV1" secondAttribute="top" constant="10" id="xtF-En-f3n"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="KGM-6h-kV1" secondAttribute="bottom" id="Jxt-Gg-vaa"/>
+                                    <constraint firstItem="KGM-6h-kV1" firstAttribute="leading" secondItem="GEJ-ih-B7Q" secondAttribute="leading" id="LDE-6y-Bqq"/>
+                                    <constraint firstItem="KGM-6h-kV1" firstAttribute="centerY" secondItem="GEJ-ih-B7Q" secondAttribute="centerY" id="LpX-RH-wcP"/>
+                                    <constraint firstItem="KGM-6h-kV1" firstAttribute="centerX" secondItem="GEJ-ih-B7Q" secondAttribute="centerX" id="dJ0-PT-e5M"/>
+                                    <constraint firstItem="KGM-6h-kV1" firstAttribute="top" secondItem="GEJ-ih-B7Q" secondAttribute="top" id="nMb-8r-pze"/>
+                                    <constraint firstAttribute="trailing" secondItem="KGM-6h-kV1" secondAttribute="trailing" id="rvN-8s-SLS"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="GEJ-ih-B7Q" firstAttribute="top" secondItem="meX-3e-AOX" secondAttribute="top" id="FJH-cp-BR3"/>
+                            <constraint firstItem="GEJ-ih-B7Q" firstAttribute="leading" secondItem="meX-3e-AOX" secondAttribute="leading" id="QC4-P8-G7H"/>
+                            <constraint firstAttribute="trailing" secondItem="GEJ-ih-B7Q" secondAttribute="trailing" id="ttq-uM-ZdB"/>
+                            <constraint firstAttribute="bottom" secondItem="GEJ-ih-B7Q" secondAttribute="bottom" id="wVB-R5-Ceu"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="mapView" destination="HCM-Ns-beW" id="Dhz-r8-bWX"/>
+                        <outlet property="searchBar" destination="THN-99-cKE" id="nUi-TM-HnU"/>
+                        <outlet property="searchBtn" destination="5jj-gM-piV" id="NcK-yX-XSA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9II-iz-iSF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-119" y="828.5"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="searchIcon" width="33" height="33"/>
+    </resources>
 </document>
