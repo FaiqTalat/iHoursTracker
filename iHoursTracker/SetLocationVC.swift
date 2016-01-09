@@ -10,7 +10,7 @@ import UIKit
 import CoreLocation
 import MapKit
 
-class SetLocationVC: UIViewController, UISearchBarDelegate {
+class SetLocationVC: UIViewController, UISearchBarDelegate, MKMapViewDelegate {
     
     @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -20,15 +20,21 @@ class SetLocationVC: UIViewController, UISearchBarDelegate {
     var geoCoder: CLGeocoder!
     
     var isSearching = false
+    var searchIsRunning = false
     
     var addJobVC: AddJobVC!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         
+        self.mapView.delegate = self
+        
         initialLocation = CLLocation(latitude: 37.332308, longitude: -122.030733)
+        setAnnotation("Current Location", subTitle: "", coordinate: initialLocation.coordinate)
+        setOverlay(initialLocation.coordinate)
         moveMapToLocation(initialLocation)
         
         initializeSearch()
@@ -55,31 +61,74 @@ class SetLocationVC: UIViewController, UISearchBarDelegate {
 
     
     // search a location from map
-    func searchLocationFromMap(keyword: String){
+    func searchLocation(keyword: String){
         
-        if keyword.characters.count < 1 {return}
-
         
-        let localSearchRequest = MKLocalSearchRequest()
-        localSearchRequest.naturalLanguageQuery = keyword
-        let localSearch = MKLocalSearch(request: localSearchRequest)
-        localSearch.startWithCompletionHandler { (localSearchRes, error) -> Void in
+        if keyword.characters.count < 1 {
+            self.searchIsRunning = false
+            return
+        }
+        
+        self.addJobVC.searchedPlaces = [MKMapItem]() // reset
+        self.addJobVC.searchedPlacesTV.reloadData()
+        
+        getPlacesFromGoogleAPI(keyword) { (places) -> Void in // google search if available
             
-            iLog("localSearchRes: \(localSearchRes)")
-            
-            if localSearchRes == nil {return}
-            self.addJobVC.searchedPlaces = [MKMapItem]() // reset
-            if let searchedItems = localSearchRes?.mapItems {
-                self.addJobVC.searchedPlaces = searchedItems
-                self.addJobVC.searchedPlacesTV.reloadData()
+            if places != nil { // success
                 
-                if self.isSearching {
-                    self.addJobVC.showSearchedPlacesTV()
-                }
+                self.addJobVC.searchedPlaces = places!
+                
+                self.searchIsRunning = false
+                
+                backgroundThread(0.0, background: nil, completion: { () -> Void in
+                    
+                    self.addJobVC.searchedPlacesTV.reloadData()
+                    
+                    if self.isSearching {
+                        self.addJobVC.showSearchedPlacesTV()
+                    }
+                    
+                })
+                
+                
+            }else{ // error
+                
+                
+                getPlacesFromLocalSearch(keyword, completion: { (places) -> Void in // local search without internet
+                    
+                    self.searchIsRunning = false
+                    
+                    if places != nil { // success
+                        self.addJobVC.searchedPlaces = places!
+                        
+                        backgroundThread(0.0, background: nil, completion: { () -> Void in
+                            
+                            self.addJobVC.searchedPlacesTV.reloadData()
+                            
+                            if self.isSearching {
+                                self.addJobVC.showSearchedPlacesTV()
+                            }
+                            
+                        })
+                        
+                        
+                    }else{ // error
+                        
+                        iLog("getPlacesFromLocalSearch error.")
+                        
+                        self.addJobVC.searchedPlacesTV.reloadData()
+                        
+                        if self.isSearching {
+                            self.addJobVC.showSearchedPlacesTV()
+                        }
+                        
+                    }
+                    
+                })
+                
             }
             
         }
-        
         
         
     }
@@ -179,15 +228,35 @@ class SetLocationVC: UIViewController, UISearchBarDelegate {
                 self.searchBar.frame.size.width = 0.0
                 self.searchBar.resignFirstResponder()
                 
+                self.searchBar.text = ""
+                
         }
         
     }
     
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
-        searchLocationFromMap(searchBar.text!)
+
+        if searchIsRunning {return}
+        
+        searchIsRunning = true
+        backgroundThread(0.5, background: nil) { () -> Void in
+            
+            self.searchLocation(searchBar.text!)
+            
+        }
+        
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        if searchIsRunning {return}
+        
+        searchIsRunning = true
+        backgroundThread(0.2, background: nil) { () -> Void in
+            
+            self.searchLocation(searchBar.text!)
+            
+        }
         
     }
     
@@ -196,12 +265,72 @@ class SetLocationVC: UIViewController, UISearchBarDelegate {
     }
 
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        searchLocationFromMap(searchBar.text!)
+        searchLocation(searchBar.text!)
         searchBar.resignFirstResponder()
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         searchEnd()
+    }
+    
+    // mapkit methods
+
+    func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
+        
+        if overlay is MKCircle {
+            let circle = MKCircleRenderer(overlay: overlay)
+            circle.strokeColor = appGreenColor
+            circle.fillColor = UIColor.lightTextColor()
+            circle.lineWidth = 1.5
+            return circle
+        }else{
+            return MKOverlayRenderer(overlay: overlay)
+        }
+        
+    }
+
+    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
+        view.draggable = true
+    }
+    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, didChangeDragState newState: MKAnnotationViewDragState, fromOldState oldState: MKAnnotationViewDragState) {
+        iLog("oldState: \(oldState.hashValue) | newState: \(newState.hashValue) | ")
+        
+        if newState.hashValue == 1 || newState.hashValue == 2 { // annotation will up
+            
+            backgroundThread(0.0, background: nil, completion: { () -> Void in
+                self.mapView.removeOverlays(self.mapView.overlays) // remove all old
+            })
+            
+        }else if newState.hashValue == 4 || newState.hashValue == 0 { // annotation will down
+            self.setOverlay(view.annotation!.coordinate)
+        }
+        
+        self.setOverlay(view.annotation!.coordinate)
+        
+    }
+
+    func setCamera(coordinate: CLLocationCoordinate2D){
+        let span = MKCoordinateSpanMake(0.01, 0.01)
+        let region = MKCoordinateRegion(center: coordinate, span: span)
+        self.mapView.setRegion(region, animated: true)
+    }
+    
+    func setOverlay(coordinate: CLLocationCoordinate2D){
+        self.mapView.removeOverlays(self.mapView.overlays) // remove all old
+        let circle = MKCircle(centerCoordinate: coordinate, radius: 50)
+        self.mapView.addOverlay(circle)
+    }
+    func setAnnotation(title: String?, subTitle: String?, coordinate: CLLocationCoordinate2D){
+        self.mapView.removeAnnotations(self.mapView.annotations) // remove all old
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = coordinate
+        if title != nil {
+            annotation.title = title
+        }
+        if subTitle != nil {
+            annotation.subtitle = subTitle
+        }
+        self.mapView.addAnnotation(annotation)
     }
     
     /*

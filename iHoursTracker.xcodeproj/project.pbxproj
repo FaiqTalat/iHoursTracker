@@ -14,6 +14,7 @@
 		5DCAD35B1C392F590023F620 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DCAD3591C392F590023F620 /* LaunchScreen.xib */; };
 		5DCAD3671C392F590023F620 /* iHoursTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DCAD3661C392F590023F620 /* iHoursTrackerTests.swift */; };
 		CD20121A1C3FB62700539CDF /* helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD2012191C3FB62700539CDF /* helpers.swift */; };
+		CD82461A1C40F1370068334A /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD8246191C40F1370068334A /* Reachability.swift */; };
 		CDE54C2A1C3FC927000570B4 /* ITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE54C291C3FC927000570B4 /* ITextField.swift */; };
 		CDE54C2F1C3FCAF3000570B4 /* AddJobVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE54C2E1C3FCAF3000570B4 /* AddJobVC.swift */; };
 		CDE54C311C3FCB02000570B4 /* JobsListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE54C301C3FCB02000570B4 /* JobsListVC.swift */; };
@@ -46,6 +47,7 @@
 		5DCAD3651C392F590023F620 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5DCAD3661C392F590023F620 /* iHoursTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iHoursTrackerTests.swift; sourceTree = "<group>"; };
 		CD2012191C3FB62700539CDF /* helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = helpers.swift; sourceTree = "<group>"; };
+		CD8246191C40F1370068334A /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		CDE54C291C3FC927000570B4 /* ITextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ITextField.swift; sourceTree = "<group>"; };
 		CDE54C2E1C3FCAF3000570B4 /* AddJobVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddJobVC.swift; sourceTree = "<group>"; };
 		CDE54C301C3FCB02000570B4 /* JobsListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobsListVC.swift; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 				CDE54C381C3FEB1B000570B4 /* GeoFencing */,
 				CDE54C3B1C3FEB7F000570B4 /* BackgroundTask.swift */,
 				CDE54C3E1C3FEC08000570B4 /* notification.swift */,
+				CD8246191C40F1370068334A /* Reachability.swift */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -240,7 +243,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Faiq Talat";
 				TargetAttributes = {
 					5DCAD34A1C392F590023F620 = {
@@ -298,6 +301,7 @@
 			files = (
 				CDE54C311C3FCB02000570B4 /* JobsListVC.swift in Sources */,
 				5DCAD3531C392F590023F620 /* MainViewController.swift in Sources */,
+				CD82461A1C40F1370068334A /* Reachability.swift in Sources */,
 				CDE54C3A1C3FEB2D000570B4 /* GeoFencing.swift in Sources */,
 				CDE54C2F1C3FCAF3000570B4 /* AddJobVC.swift in Sources */,
 				CDE54C2A1C3FC927000570B4 /* ITextField.swift in Sources */,
@@ -368,6 +372,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -434,6 +439,7 @@
 				INFOPLIST_FILE = iHoursTracker/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.FT.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -445,6 +451,7 @@
 				INFOPLIST_FILE = iHoursTracker/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.FT.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -463,6 +470,7 @@
 				);
 				INFOPLIST_FILE = iHoursTrackerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.FT.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iHoursTracker.app/iHoursTracker";
 			};
@@ -478,6 +486,7 @@
 				);
 				INFOPLIST_FILE = iHoursTrackerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.FT.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iHoursTracker.app/iHoursTracker";
 			};

@@ -8,11 +8,230 @@
 
 import Foundation
 import UIKit
+import CoreLocation
+import MapKit
 
 var isAppLog = true
 var statusBarTopView = UIView(frame: UIApplication.sharedApplication().statusBarFrame)
 
 let appGreenColor = UIColor(red: 101.0/255.0, green: 178.0/255.0, blue: 137.0/255.0, alpha: 1.0)
+
+let googleAPIKey = "AIzaSyA2bV8iPoGiZF_8ct2dmpTYbjhxHW9FaRQ"
+
+func getPlacesFromGoogleAPI(address: String, completion: (places: [MKMapItem]?) -> Void){
+    
+    if !Reachability.isConnectedToNetwork() {
+        iLog("Internet is not available!a")
+        completion(places: nil)
+        return
+    }
+    
+    var urlString = "https://maps.googleapis.com/maps/api/place/queryautocomplete/json?input=\(address)&key=\(googleAPIKey)"
+    
+    urlString = getUrlEncoded(urlString)
+    
+    let nsUrl = NSURL(string: urlString)
+    
+    if nsUrl == nil {
+        completion(places: nil)
+        return
+    }
+    
+    showNetworkActivityIndicator()
+
+    let task = NSURLSession.sharedSession().dataTaskWithURL(nsUrl!) { (data, response, error) -> Void in
+        hideNetworkActivityIndicator()
+        if data != nil {
+            
+            
+            parseQueryPlacesFromData(data!, completion: { (places) -> Void in
+                
+                if places.count > 0 {
+                    completion(places: places)
+                }else{
+                    completion(places: nil)
+                }
+                
+            })
+            
+        }else{
+            completion(places: nil)
+        }
+        
+        
+    }
+    // 5
+    task.resume()
+}
+
+func parseQueryPlacesFromData(data : NSData, completion: (places: [MKMapItem])->Void) {
+    
+    var mapItems = [MKMapItem]()
+    
+    do{
+        let json = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
+        
+        let results = json["predictions"] as? Array<NSDictionary>
+        print("results = \(results!.count)")
+        
+        if results?.count < 1 { completion(places: mapItems) }
+        
+        for result in results! {
+            
+            var description = result["description"] as? String
+            
+            if description == nil { description = "" }
+            
+            if let placeID = result["place_id"] as? String {
+                
+                getDetailPlaceFromPlaceID(placeID, completion: { (place) -> Void in
+                    
+                    if place != nil {
+                        mapItems.append(place!)
+                    }
+                    
+                    iLog("mapItems: \(mapItems)")
+                    
+                    completion(places: mapItems)
+                    
+                    
+                })
+                
+                
+                
+            }
+            
+        }
+        
+    }catch{
+        
+    }
+    
+    
+    
+}
+
+func getDetailPlaceFromPlaceID(placeID: String, completion: (place: MKMapItem?) -> Void){
+    
+    if !Reachability.isConnectedToNetwork() {
+        iLog("Internet is not available!a")
+        completion(place: nil)
+        return
+    }
+    
+    var urlString = "https://maps.googleapis.com/maps/api/place/details/json?placeid=\(placeID)&key=\(googleAPIKey)"
+    
+    urlString = getUrlEncoded(urlString)
+    
+    let nsUrl = NSURL(string: urlString)
+    
+    if nsUrl == nil {
+        completion(place: nil)
+        return
+    }
+    
+    showNetworkActivityIndicator()
+    
+    let task = NSURLSession.sharedSession().dataTaskWithURL(nsUrl!) { (data, response, error) -> Void in
+        
+        hideNetworkActivityIndicator()
+        
+        if data != nil {
+            
+            do{
+                
+                let json = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
+                
+                
+                if let result = json["result"] as? [String: AnyObject] {
+                    
+                    var coordinate : CLLocationCoordinate2D!
+                    
+                    if let geometry = result["geometry"] as? NSDictionary {
+                        if let location = geometry["location"] as? NSDictionary {
+                            let lat = location["lat"] as? CLLocationDegrees
+                            let long = location["lng"] as? CLLocationDegrees
+                            coordinate = CLLocationCoordinate2D(latitude: lat!, longitude: long!)
+                            
+                            let placemark = MKPlacemark(coordinate: coordinate, addressDictionary: nil)
+                            let mapItem = MKMapItem(placemark: placemark)
+                            
+                            mapItem.name = "Title Not Found."
+                            
+                            if let name = result["name"] as? String{
+                                mapItem.name = "\(name)"
+                            }
+                            if let formattedAddress = result["formatted_address"] as? String{
+                                mapItem.formattedAddress = "\(formattedAddress)"
+                            }
+                            if let vicinity = result["vicinity"] as? String{
+                                mapItem.vicinity = "\(vicinity)"
+                            }
+
+                            
+                            completion(place: mapItem)
+                            return
+                        }
+                    }
+                    
+                }
+                
+                
+            }catch{
+                
+            }
+
+        }
+        
+        completion(place: nil)
+        
+    }
+    
+    // 5
+    task.resume()
+    
+}
+
+func getPlacesFromLocalSearch(address: String, completion: (places: [MKMapItem]?) -> Void){
+    
+    iLog("\(__FUNCTION__), address: \(address)")
+    
+    var searchedPlaces = [MKMapItem]()
+    
+    let localSearchRequest = MKLocalSearchRequest()
+    localSearchRequest.naturalLanguageQuery = address
+    let localSearch = MKLocalSearch(request: localSearchRequest)
+    
+    showNetworkActivityIndicator()
+    localSearch.startWithCompletionHandler { (localSearchRes, error) -> Void in
+        hideNetworkActivityIndicator()
+        iLog("localSearchRes: \(localSearchRes), error: \(error)")
+        
+        if localSearchRes == nil || error != nil {
+            completion(places: nil)
+            return
+        }
+        
+        if let searchedItems = localSearchRes?.mapItems {
+            searchedPlaces = searchedItems
+            completion(places: searchedPlaces)
+        }else{
+            completion(places: nil)
+        }
+        
+    }
+    
+}
+
+func getUrlEncoded(url: String) -> String{
+    
+    //let encodedUrl = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
+    
+    let encodedUrl = url.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+    iLog("\(__FUNCTION__) | url: \(url) | encodedUrl: \(encodedUrl)")
+    return encodedUrl!
+}
+
 
 func setTopStatusBarColor(color: UIColor){
     let delegate = UIApplication.sharedApplication().delegate
@@ -29,8 +248,45 @@ func updateTopStatusBarFrame(){
 }
 
 
+func backgroundThread(delay: Double = 0.0, background: (() -> Void)? = nil, completion: (() -> Void)? = nil) {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+        if(background != nil){ background!(); }
+        
+        let popTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC)))
+        dispatch_after(popTime, dispatch_get_main_queue()) {
+            if(completion != nil){ completion!(); }
+        }
+    }
+}
 
 
+func iLog(data: AnyObject?){
+    if isAppLog {
+        print("iLog: time: \(currentTime())")
+        
+        if data != nil {
+            print(data!)
+        }else{
+            print(data)
+        }
+        
+        print("")
+        
+    }
+}
+
+
+func currentTime() -> String {
+    let time = NSDateFormatter.localizedStringFromDate(NSDate(), dateStyle: .MediumStyle, timeStyle: .MediumStyle)
+    return time
+}
+
+func showNetworkActivityIndicator(){
+    UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+}
+func hideNetworkActivityIndicator(){
+    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+}
 
 
 
@@ -54,25 +310,36 @@ extension UIView{
     
 }
 
-
-
-func iLog(data: AnyObject?){
-    if isAppLog {
-        print("iLog: time: \(currentTime())")
-        
-        if data != nil {
-            print(data!)
-        }else{
-            print(data)
-        }
-        
-        print("")
-        
+extension MKMapItem {
+    
+    private struct addresses {
+        static var formatted_address: String?
+        static var vicinity: String?
     }
+
+    var formattedAddress: String? {
+        get{
+            return addresses.formatted_address
+        }
+        set{
+            addresses.formatted_address = newValue
+        }
+    }
+    
+    var vicinity: String? {
+        get{
+            return addresses.vicinity
+        }
+        set{
+            addresses.vicinity = newValue
+        }
+    }
+    
+
+
+
 }
 
 
-func currentTime() -> String {
-    let time = NSDateFormatter.localizedStringFromDate(NSDate(), dateStyle: .MediumStyle, timeStyle: .MediumStyle)
-    return time
-}
+
+

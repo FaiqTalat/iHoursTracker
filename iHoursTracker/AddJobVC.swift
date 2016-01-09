@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class AddJobVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDelegate, UITableViewDataSource {
+class AddJobVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
 
     @IBOutlet weak var topTitle: UILabel!
     @IBOutlet weak var searchedPlacesTV: UITableView!
@@ -30,6 +30,8 @@ class AddJobVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, 
     var searchedPlacesTVOrignalFrame: CGRect!
     var isSeenSearchedPlacesTV = false
     
+    var isAnimateSearchedPlacesTV = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -40,6 +42,8 @@ class AddJobVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, 
         
         searchedPlacesTV.translatesAutoresizingMaskIntoConstraints = true
         searchedPlacesTV.frame.origin.y = self.locationContainerView.frame.origin.y
+        
+        locationSegmentControlStateChanged(self.locationSegmentControl) // set according to current selected segment
         
     }
     
@@ -148,29 +152,89 @@ class AddJobVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, 
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
+        
+        let place = self.searchedPlaces[indexPath.row]
+        
+        
         cell.backgroundColor = UIColor.grayColor()
-        cell.textLabel?.text = self.searchedPlaces[indexPath.row].name
+        
+        var displayName = ""
+        
+        if place.name != nil {
+            displayName = "\(place.name!)"
+        }
+        
+//        if place.vicinity != nil {
+//            displayName = "\(displayName), \(place.vicinity!)"
+//        }
+        
+        if place.formattedAddress != nil {
+            displayName = "\(displayName), \(place.formattedAddress!)"
+        }
+        
+        
+        cell.textLabel?.text = displayName
+        
         cell.textLabel?.textColor = UIColor.whiteColor()
+        cell.textLabel?.font = UIFont(name: cell.textLabel!.font.fontName, size: 10.0)
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
+        let cell = tableView.cellForRowAtIndexPath(indexPath)
+        
+        cell?.textLabel?.textColor = appGreenColor
+        
         let item = self.searchedPlaces[indexPath.row]
         
-        self.locationContainerVC.mapView.centerCoordinate = item.placemark.coordinate
+        self.locationContainerVC.moveMapToLocation(CLLocation(latitude: item.placemark.coordinate.latitude, longitude: item.placemark.coordinate.longitude))
+        
+        
+        self.locationContainerVC.setCamera(item.placemark.coordinate)
+        self.locationContainerVC.setAnnotation(item.name, subTitle: item.formattedAddress, coordinate: item.placemark.coordinate)
+        self.locationContainerVC.setOverlay(item.placemark.coordinate)
+        
+    }
+    
+    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        let cell = tableView.cellForRowAtIndexPath(indexPath)
+        
+        cell?.textLabel?.textColor = UIColor.whiteColor()
         
     }
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         
-        cell.layer.transform = CATransform3DMakeScale(0.5,0.5,1)
-        UIView.animateWithDuration(0.4, animations: {
-            cell.layer.transform = CATransform3DMakeScale(1,1,1)
-            },completion: { finished in
-                
-        })
+        if isAnimateSearchedPlacesTV {
+            cell.layer.transform = CATransform3DMakeScale(0.5,0.5,1)
+            UIView.animateWithDuration(0.4, animations: {
+                cell.layer.transform = CATransform3DMakeScale(1,1,1)
+                },completion: { finished in
+                    
+            })
+        }else{
+            cell.alpha = 0.0
+            UIView.animateWithDuration(0.5, animations: {
+                cell.alpha = 1.0
+                },completion: { finished in
+                    
+            })
+        }
         
+    }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        self.locationContainerVC.searchBar.resignFirstResponder() // hide keyboard when scroll search results
+    }
+    
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        self.isAnimateSearchedPlacesTV = true
+    }
+    
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        self.isAnimateSearchedPlacesTV = false
     }
     
     func getSearchedPlacesTVOrignalFrame(){

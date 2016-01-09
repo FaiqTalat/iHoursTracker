@@ -92,7 +92,7 @@
                                     <outlet property="delegate" destination="DiL-LG-v8g" id="maU-RV-Znb"/>
                                 </connections>
                             </pickerView>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="qlq-jh-9bS">
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="qlq-jh-9bS">
                                 <rect key="frame" x="159" y="190" width="283" height="29"/>
                                 <segments>
                                     <segment title="Automatic - Tracking"/>
@@ -112,7 +112,7 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" name="ChalkboardSE-Bold" family="Chalkboard SE" pointSize="15"/>
                                 <state key="normal" title="Add">
-                                    <color key="titleColor" cocoaTouchSystemColor="lightTextColor"/>
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
                                 </state>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="GA8-M0-JQz" userLabel="searched places list">
@@ -200,6 +200,10 @@
         <scene sceneID="vj3-61-G1n">
             <objects>
                 <viewController id="6xW-yG-Ymm" customClass="SetLocationVC" customModule="iHoursTracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="KUp-ze-wZa"/>
+                        <viewControllerLayoutGuide type="bottom" id="Hef-f2-X4p"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="meX-3e-AOX">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="277"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -210,7 +214,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KGM-6h-kV1" userLabel="Content View">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="277"/>
                                         <subviews>
-                                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="HCM-Ns-beW">
+                                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HCM-Ns-beW">
                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="277"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="6xW-yG-Ymm" id="9hc-LY-7L5"/>
