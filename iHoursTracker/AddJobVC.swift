@@ -112,7 +112,9 @@ class AddJobVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, 
             
             }) { (bool) -> Void in // animation completed
                 
-            }
+                self.locationContainerVC.resetSearch()
+            
+        }
         
         
     }
@@ -157,6 +159,17 @@ class AddJobVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, 
         let item = self.searchedPlaces[indexPath.row]
         
         self.locationContainerVC.mapView.centerCoordinate = item.placemark.coordinate
+        
+    }
+    
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        cell.layer.transform = CATransform3DMakeScale(0.5,0.5,1)
+        UIView.animateWithDuration(0.4, animations: {
+            cell.layer.transform = CATransform3DMakeScale(1,1,1)
+            },completion: { finished in
+                
+        })
         
     }
     

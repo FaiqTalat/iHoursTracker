@@ -31,14 +31,9 @@ class SetLocationVC: UIViewController, UISearchBarDelegate {
         initialLocation = CLLocation(latitude: 37.332308, longitude: -122.030733)
         moveMapToLocation(initialLocation)
         
-        searchBar.delegate = self
-        searchBar.translatesAutoresizingMaskIntoConstraints = true // set not to follow constraints
-        searchBar.returnKeyType = UIReturnKeyType.Search
-        searchBar.showsCancelButton = true
+        initializeSearch()
         
-        searchIconMakeDragable()
-        
-
+        //searchIconMakeDragable()
         
     }
     
@@ -63,11 +58,7 @@ class SetLocationVC: UIViewController, UISearchBarDelegate {
     func searchLocationFromMap(keyword: String){
         
         if keyword.characters.count < 1 {return}
-        
-        if geoCoder == nil { geoCoder = CLGeocoder() }
-        
-        
-        
+
         
         let localSearchRequest = MKLocalSearchRequest()
         localSearchRequest.naturalLanguageQuery = keyword
@@ -81,10 +72,11 @@ class SetLocationVC: UIViewController, UISearchBarDelegate {
             if let searchedItems = localSearchRes?.mapItems {
                 self.addJobVC.searchedPlaces = searchedItems
                 self.addJobVC.searchedPlacesTV.reloadData()
-                self.addJobVC.showSearchedPlacesTV()
                 
+                if self.isSearching {
+                    self.addJobVC.showSearchedPlacesTV()
+                }
             }
-            
             
         }
         
@@ -114,6 +106,30 @@ class SetLocationVC: UIViewController, UISearchBarDelegate {
     }
     
     // searching...
+    
+    func initializeSearch(){
+        
+        searchBar.delegate = self
+        searchBar.translatesAutoresizingMaskIntoConstraints = true // set not to follow constraints
+        searchBar.returnKeyType = UIReturnKeyType.Search
+        searchBar.showsCancelButton = true
+        
+        var cancelButton: UIButton
+        let topView: UIView = searchBar.subviews[0] as UIView
+        for subView in topView.subviews {
+            if subView.isKindOfClass(NSClassFromString("UINavigationButton")!) {
+                cancelButton = subView as! UIButton
+                cancelButton.setTitle("Done", forState: UIControlState.Normal)
+            }
+        }
+        
+    }
+    
+    func resetSearch(){
+        searchBar.text = ""
+        searchEnd()
+    }
+    
     @IBAction func searchToggle() {
         
         isSearching = !isSearching
@@ -172,7 +188,7 @@ class SetLocationVC: UIViewController, UISearchBarDelegate {
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        searchLocationFromMap(searchBar.text!)
+        
     }
     
     func searchBarTextDidEndEditing(searchBar: UISearchBar) {
@@ -180,6 +196,7 @@ class SetLocationVC: UIViewController, UISearchBarDelegate {
     }
 
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        searchLocationFromMap(searchBar.text!)
         searchBar.resignFirstResponder()
     }
     
