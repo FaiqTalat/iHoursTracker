@@ -188,6 +188,8 @@ class AddJobVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, 
         
         let item = self.searchedPlaces[indexPath.row]
         
+        self.locationContainerVC.currentPlace = item
+        
         self.locationContainerVC.moveMapToLocation(CLLocation(latitude: item.placemark.coordinate.latitude, longitude: item.placemark.coordinate.longitude))
         
         

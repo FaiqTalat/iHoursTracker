@@ -28,6 +28,10 @@ class SetLocationVC: UIViewController, UISearchBarDelegate, MKMapViewDelegate {
     var currentRadius: CLLocationDistance = kDefaultRadiusForNewPlace
     var oldRadiusSliderValue: Float = 0.0
     
+    var isUpdateAnnotationBoundryTitleRunning = false
+    
+    var currentPlace: MKMapItem?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -338,6 +342,10 @@ class SetLocationVC: UIViewController, UISearchBarDelegate, MKMapViewDelegate {
         
         self.mapView.setVisibleMapRect(circle.boundingMapRect, edgePadding: UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding), animated: true)
         
+        self.mapView.selectAnnotation(self.mapView.annotations[0], animated: true)
+        
+        
+        self.updateAnnotationBoundryTitle() // update radius in annotation
         
     }
     
@@ -348,12 +356,43 @@ class SetLocationVC: UIViewController, UISearchBarDelegate, MKMapViewDelegate {
         if title != nil {
             annotation.title = title
         }
-        if subTitle != nil {
-            annotation.subtitle = subTitle
-        }
         self.mapView.addAnnotation(annotation)
         
         self.mapView.selectAnnotation(annotation, animated: true)
+    }
+    
+    func updateAnnotationBoundryTitle(){
+
+        if isUpdateAnnotationBoundryTitleRunning {return}
+        
+        isUpdateAnnotationBoundryTitleRunning = true
+        
+        backgroundThread(0.3, background: nil) { () -> Void in
+            
+            let oldAnnotation = self.mapView.annotations[0]
+            self.mapView.removeAnnotations(self.mapView.annotations) // remove all old
+            
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = oldAnnotation.coordinate
+            if oldAnnotation.title != nil {
+                annotation.title = oldAnnotation.title!!
+            }
+            
+            if self.currentRadius >= 1000 {
+                var radiusAsDouble: Double = (Double(self.currentRadius) / 1000.00) as Double
+                annotation.subtitle = "\(radiusAsDouble) km Radius"
+            }else{
+                annotation.subtitle = "\(Int(self.currentRadius)) m Radius"
+            }
+            
+            self.mapView.addAnnotation(annotation)
+            
+            self.mapView.selectAnnotation(annotation, animated: true)
+            
+            self.isUpdateAnnotationBoundryTitleRunning = false
+            
+        }
+        
     }
     
     
