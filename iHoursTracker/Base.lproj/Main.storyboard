@@ -221,11 +221,12 @@
                                                 </connections>
                                             </mapView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5jj-gM-piV" userLabel="Search Button">
-                                                <rect key="frame" x="10" y="10" width="20" height="20"/>
+                                                <rect key="frame" x="550" y="0.0" width="50" height="50"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="20" id="MNo-cp-7ov"/>
-                                                    <constraint firstAttribute="width" constant="20" id="krm-ee-OUL"/>
+                                                    <constraint firstAttribute="height" constant="50" id="MNo-cp-7ov"/>
+                                                    <constraint firstAttribute="width" constant="50" id="krm-ee-OUL"/>
                                                 </constraints>
+                                                <inset key="contentEdgeInsets" minX="13" minY="13" maxX="13" maxY="13"/>
                                                 <state key="normal" image="searchIcon"/>
                                                 <connections>
                                                     <action selector="searchToggle" destination="6xW-yG-Ymm" eventType="touchUpInside" id="bCY-oh-nfJ"/>
@@ -239,17 +240,32 @@
                                                 <color key="barTintColor" red="0.30196078430000001" green="0.63921568630000003" blue="0.45882352939999999" alpha="1" colorSpace="calibratedRGB"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </searchBar>
+                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="250" minValue="1" maxValue="500" translatesAutoresizingMaskIntoConstraints="NO" id="95J-dc-uXJ">
+                                                <rect key="frame" x="33" y="237" width="534" height="31"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <color key="tintColor" red="0.30196078430000001" green="0.63921568630000003" blue="0.45882352939999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="minimumTrackTintColor" red="0.30196078430000001" green="0.63921568630000003" blue="0.45882352939999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="maximumTrackTintColor" red="0.80401789030000004" green="0.80401789030000004" blue="0.80401789030000004" alpha="1" colorSpace="calibratedRGB"/>
+                                                <connections>
+                                                    <action selector="radiusSliderChanged:" destination="6xW-yG-Ymm" eventType="touchUpInside" id="E66-cL-MV7"/>
+                                                    <action selector="radiusSliderChanged:" destination="6xW-yG-Ymm" eventType="touchDown" id="F92-eS-Ehj"/>
+                                                    <action selector="radiusSliderChanged:" destination="6xW-yG-Ymm" eventType="valueChanged" id="usH-WM-rpD"/>
+                                                </connections>
+                                            </slider>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstItem="THN-99-cKE" firstAttribute="top" secondItem="KGM-6h-kV1" secondAttribute="top" id="5H3-nE-UBs"/>
                                             <constraint firstAttribute="trailing" secondItem="HCM-Ns-beW" secondAttribute="trailing" id="Ld5-YE-rdN"/>
                                             <constraint firstItem="HCM-Ns-beW" firstAttribute="top" secondItem="KGM-6h-kV1" secondAttribute="top" id="OUd-uX-qHS"/>
+                                            <constraint firstItem="95J-dc-uXJ" firstAttribute="leading" secondItem="KGM-6h-kV1" secondAttribute="leading" constant="35" id="Pvm-0g-4XL"/>
+                                            <constraint firstAttribute="trailing" secondItem="95J-dc-uXJ" secondAttribute="trailing" constant="35" id="XZk-zy-4nZ"/>
+                                            <constraint firstAttribute="bottom" secondItem="95J-dc-uXJ" secondAttribute="bottom" constant="10" id="fZd-G9-wVp"/>
+                                            <constraint firstAttribute="trailing" secondItem="5jj-gM-piV" secondAttribute="trailing" id="frX-PT-fmx"/>
                                             <constraint firstAttribute="bottom" secondItem="HCM-Ns-beW" secondAttribute="bottom" id="huN-hK-1zz"/>
                                             <constraint firstItem="THN-99-cKE" firstAttribute="leading" secondItem="KGM-6h-kV1" secondAttribute="leading" id="vAX-jk-uUM"/>
                                             <constraint firstItem="HCM-Ns-beW" firstAttribute="leading" secondItem="KGM-6h-kV1" secondAttribute="leading" id="w5k-Nl-cvV"/>
-                                            <constraint firstItem="5jj-gM-piV" firstAttribute="leading" secondItem="KGM-6h-kV1" secondAttribute="leading" constant="10" id="xcp-n5-1zR"/>
-                                            <constraint firstItem="5jj-gM-piV" firstAttribute="top" secondItem="KGM-6h-kV1" secondAttribute="top" constant="10" id="xtF-En-f3n"/>
+                                            <constraint firstItem="5jj-gM-piV" firstAttribute="top" secondItem="KGM-6h-kV1" secondAttribute="top" id="xtF-En-f3n"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -273,6 +289,7 @@
                     </view>
                     <connections>
                         <outlet property="mapView" destination="HCM-Ns-beW" id="Dhz-r8-bWX"/>
+                        <outlet property="radiusSlider" destination="95J-dc-uXJ" id="MG8-H7-1BR"/>
                         <outlet property="searchBar" destination="THN-99-cKE" id="nUi-TM-HnU"/>
                         <outlet property="searchBtn" destination="5jj-gM-piV" id="NcK-yX-XSA"/>
                     </connections>

@@ -18,6 +18,8 @@ let appGreenColor = UIColor(red: 101.0/255.0, green: 178.0/255.0, blue: 137.0/25
 
 let googleAPIKey = "AIzaSyA2bV8iPoGiZF_8ct2dmpTYbjhxHW9FaRQ"
 
+let kDefaultRadiusForNewPlace = 100.0 // meter
+
 func getPlacesFromGoogleAPI(address: String, completion: (places: [MKMapItem]?) -> Void){
     
     if !Reachability.isConnectedToNetwork() {

@@ -12,6 +12,7 @@ import MapKit
 
 class SetLocationVC: UIViewController, UISearchBarDelegate, MKMapViewDelegate {
     
+    @IBOutlet weak var radiusSlider: UISlider!
     @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var mapView: MKMapView!
@@ -24,6 +25,8 @@ class SetLocationVC: UIViewController, UISearchBarDelegate, MKMapViewDelegate {
     
     var addJobVC: AddJobVC!
     
+    var currentRadius: CLLocationDistance = kDefaultRadiusForNewPlace
+    var oldRadiusSliderValue: Float = 0.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -261,7 +264,9 @@ class SetLocationVC: UIViewController, UISearchBarDelegate, MKMapViewDelegate {
     }
     
     func searchBarTextDidEndEditing(searchBar: UISearchBar) {
-        //searchEnd()
+        if searchBar.text?.characters.count < 1 {
+            searchEnd()
+        }
     }
 
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
@@ -317,9 +322,25 @@ class SetLocationVC: UIViewController, UISearchBarDelegate, MKMapViewDelegate {
     
     func setOverlay(coordinate: CLLocationCoordinate2D){
         self.mapView.removeOverlays(self.mapView.overlays) // remove all old
-        let circle = MKCircle(centerCoordinate: coordinate, radius: 50)
+        let circle = MKCircle(centerCoordinate: coordinate, radius: self.currentRadius)
         self.mapView.addOverlay(circle)
     }
+    func setCircleRadius(radius: CLLocationDistance){
+        
+        iLog("\(__FUNCTION__), radius: \(radius)")
+        self.currentRadius = radius
+        let circle = MKCircle(centerCoordinate: self.mapView.overlays[0].coordinate, radius: radius)
+        self.mapView.removeOverlays(self.mapView.overlays) // remove all old
+        self.mapView.addOverlay(circle)
+
+        
+        let padding: CGFloat = 50.0
+        
+        self.mapView.setVisibleMapRect(circle.boundingMapRect, edgePadding: UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding), animated: true)
+        
+        
+    }
+    
     func setAnnotation(title: String?, subTitle: String?, coordinate: CLLocationCoordinate2D){
         self.mapView.removeAnnotations(self.mapView.annotations) // remove all old
         let annotation = MKPointAnnotation()
@@ -331,7 +352,55 @@ class SetLocationVC: UIViewController, UISearchBarDelegate, MKMapViewDelegate {
             annotation.subtitle = subTitle
         }
         self.mapView.addAnnotation(annotation)
+        
+        self.mapView.selectAnnotation(annotation, animated: true)
     }
+    
+    
+    @IBAction func radiusSliderChanged(sender: UISlider) {
+        
+        iLog("sender.state \(sender.state)")
+        
+        let currentRadiusSliderValue: Float = sender.value
+        
+        if currentRadiusSliderValue < oldRadiusSliderValue { // decreased
+            let differenceFromOldToNewValue = Double(oldRadiusSliderValue - currentRadiusSliderValue)
+            
+            
+            let newMeasuredValue = Double(currentRadius - differenceFromOldToNewValue)
+            iLog("decreasing differenceFromOldToNewValue: \(differenceFromOldToNewValue) | newMeasuredValue: \(newMeasuredValue)")
+            if newMeasuredValue  > 1 {
+                setCircleRadius(newMeasuredValue)
+            }
+            
+        }else{  // increased
+            let differenceFromOldToNewValue = Double(currentRadiusSliderValue - oldRadiusSliderValue)
+            
+            let newMeasuredValue = Double(currentRadius + differenceFromOldToNewValue)
+            
+            iLog("increasing differenceFromOldToNewValue: \(differenceFromOldToNewValue) | newMeasuredValue: \(newMeasuredValue)")
+            
+            if newMeasuredValue  > 1 {
+                setCircleRadius(newMeasuredValue)
+            }
+            
+        }
+        
+        
+        
+        
+        if sender.state.rawValue == 0 { // sliding finish
+            sender.value = sender.maximumValue / 2.0
+            oldRadiusSliderValue = sender.value
+        }
+        
+        
+        oldRadiusSliderValue = sender.value
+    }
+    
+    
+
+    
     
     /*
     // MARK: - Navigation

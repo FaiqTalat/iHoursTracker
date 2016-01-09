@@ -193,7 +193,11 @@ class AddJobVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, 
         
         self.locationContainerVC.setCamera(item.placemark.coordinate)
         self.locationContainerVC.setAnnotation(item.name, subTitle: item.formattedAddress, coordinate: item.placemark.coordinate)
+        self.locationContainerVC.currentRadius = kDefaultRadiusForNewPlace
+        self.locationContainerVC.radiusSlider.value = self.locationContainerVC.radiusSlider.maximumValue / 2.0
+        self.locationContainerVC.oldRadiusSliderValue = self.locationContainerVC.radiusSlider.value
         self.locationContainerVC.setOverlay(item.placemark.coordinate)
+        
         
     }
     
