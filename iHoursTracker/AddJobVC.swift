@@ -23,7 +23,7 @@ class AddJobVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, 
     @IBOutlet weak var locationContainerView: UIView!
     var locationContainerVC: SetLocationVC!
     
-    let rateTypeData = ["Hourly", "Daily", "Weekly", "Monthly", "Quarterly", "Yearly"]
+    let rateTypeData = ["Daily", "Weekly", "Monthly", "Hourly", "Quarterly", "Yearly"]
     
     var searchedPlaces = [MKMapItem]()
     

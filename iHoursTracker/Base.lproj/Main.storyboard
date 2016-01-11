@@ -105,14 +105,14 @@
                             </segmentedControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eLL-xI-VFb">
                                 <rect key="frame" x="250" y="511" width="100" height="35"/>
-                                <color key="backgroundColor" red="0.80401789030000004" green="0.80401789030000004" blue="0.80401789030000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.30196078430000001" green="0.63921568630000003" blue="0.45882352939999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="Vy4-KW-9Ff"/>
                                     <constraint firstAttribute="height" constant="35" id="fjX-nt-UED"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="ChalkboardSE-Bold" family="Chalkboard SE" pointSize="15"/>
                                 <state key="normal" title="Add">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="addJobBtnPressed:" destination="DiL-LG-v8g" eventType="touchUpInside" id="IEc-m3-upa"/>
@@ -235,6 +235,18 @@
                                                     <action selector="searchToggle" destination="6xW-yG-Ymm" eventType="touchUpInside" id="bCY-oh-nfJ"/>
                                                 </connections>
                                             </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Move To Current Location" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M5s-Sh-0u5">
+                                                <rect key="frame" x="8" y="13" width="42" height="48"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZKi-to-pwa">
+                                                <rect key="frame" x="8" y="69" width="51" height="31"/>
+                                                <connections>
+                                                    <action selector="moveToCurrentLocationSwitched:" destination="6xW-yG-Ymm" eventType="valueChanged" id="DhC-jf-Tk1"/>
+                                                </connections>
+                                            </switch>
                                             <searchBar contentMode="redraw" placeholder="Search a place" translatesAutoresizingMaskIntoConstraints="NO" id="THN-99-cKE">
                                                 <rect key="frame" x="0.0" y="0.0" width="0.0" height="44"/>
                                                 <constraints>
@@ -321,17 +333,21 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstItem="THN-99-cKE" firstAttribute="top" secondItem="KGM-6h-kV1" secondAttribute="top" id="5H3-nE-UBs"/>
+                                            <constraint firstItem="ZKi-to-pwa" firstAttribute="top" secondItem="M5s-Sh-0u5" secondAttribute="bottom" constant="8" id="G4S-3i-ZRq"/>
                                             <constraint firstAttribute="trailing" secondItem="HCM-Ns-beW" secondAttribute="trailing" id="Ld5-YE-rdN"/>
                                             <constraint firstItem="cfB-Wc-dEh" firstAttribute="top" secondItem="5jj-gM-piV" secondAttribute="bottom" constant="6" id="Mpj-F6-8p7"/>
                                             <constraint firstItem="HCM-Ns-beW" firstAttribute="top" secondItem="KGM-6h-kV1" secondAttribute="top" id="OUd-uX-qHS"/>
                                             <constraint firstItem="95J-dc-uXJ" firstAttribute="leading" secondItem="KGM-6h-kV1" secondAttribute="leading" constant="35" id="Pvm-0g-4XL"/>
                                             <constraint firstItem="2pN-aF-rXl" firstAttribute="top" secondItem="cfB-Wc-dEh" secondAttribute="bottom" constant="8" id="Ryv-FL-w0W"/>
                                             <constraint firstAttribute="trailing" secondItem="2pN-aF-rXl" secondAttribute="trailing" constant="5" id="Sai-qZ-pOj"/>
+                                            <constraint firstItem="M5s-Sh-0u5" firstAttribute="leading" secondItem="KGM-6h-kV1" secondAttribute="leading" constant="8" id="WSS-K2-R62"/>
                                             <constraint firstAttribute="trailing" secondItem="95J-dc-uXJ" secondAttribute="trailing" constant="35" id="XZk-zy-4nZ"/>
+                                            <constraint firstItem="M5s-Sh-0u5" firstAttribute="top" secondItem="KGM-6h-kV1" secondAttribute="top" constant="13" id="bIy-dI-rpD"/>
                                             <constraint firstAttribute="trailing" secondItem="cfB-Wc-dEh" secondAttribute="trailing" constant="5" id="dSk-FW-8Zr"/>
                                             <constraint firstAttribute="bottom" secondItem="95J-dc-uXJ" secondAttribute="bottom" constant="10" id="fZd-G9-wVp"/>
                                             <constraint firstAttribute="trailing" secondItem="5jj-gM-piV" secondAttribute="trailing" id="frX-PT-fmx"/>
                                             <constraint firstAttribute="bottom" secondItem="HCM-Ns-beW" secondAttribute="bottom" id="huN-hK-1zz"/>
+                                            <constraint firstItem="ZKi-to-pwa" firstAttribute="leading" secondItem="KGM-6h-kV1" secondAttribute="leading" constant="8" id="u8g-5G-lQn"/>
                                             <constraint firstItem="THN-99-cKE" firstAttribute="leading" secondItem="KGM-6h-kV1" secondAttribute="leading" id="vAX-jk-uUM"/>
                                             <constraint firstItem="HCM-Ns-beW" firstAttribute="leading" secondItem="KGM-6h-kV1" secondAttribute="leading" id="w5k-Nl-cvV"/>
                                             <constraint firstItem="5jj-gM-piV" firstAttribute="top" secondItem="KGM-6h-kV1" secondAttribute="top" id="xtF-En-f3n"/>
@@ -357,6 +373,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="isMoveToCurrentLocation" destination="ZKi-to-pwa" id="fHj-SX-DiV"/>
                         <outlet property="mapView" destination="HCM-Ns-beW" id="Dhz-r8-bWX"/>
                         <outlet property="radiusSlider" destination="95J-dc-uXJ" id="MG8-H7-1BR"/>
                         <outlet property="searchBar" destination="THN-99-cKE" id="nUi-TM-HnU"/>

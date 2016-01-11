@@ -17,10 +17,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
-        setTopStatusBarColor(appGreenColor)
+        if launchOptions == nil { // app launch normal state
+            iLog("didFinishLaunchingWithOptions")
+            
+            setTopStatusBarColor(appGreenColor)
+            
+            // reset app badge number
+            application.applicationIconBadgeNumber = 0
+            
+            // start geofencing when app is running
+            GeoFencing.startMonitoringForAllRegions()
+            
+            // start internet connectivity monitoring
+            //Reachability.startReachability()
+            
+        } else if (launchOptions![UIApplicationLaunchOptionsLocationKey] != nil) { // app launch by geofencing location updates
+            
+            // start geofencing when app is in suspended state
+            GeoFencing.startMonitoringForAllRegionsWhenAppSuspended()
+            
+        }
+        
+        
         
         return true
     }
+    
+    
 
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

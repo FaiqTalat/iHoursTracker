@@ -12,6 +12,7 @@ import MapKit
 
 class SetLocationVC: UIViewController, UISearchBarDelegate, MKMapViewDelegate {
     
+    @IBOutlet weak var isMoveToCurrentLocation: UISwitch!
     @IBOutlet weak var radiusSlider: UISlider!
     @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -32,6 +33,10 @@ class SetLocationVC: UIViewController, UISearchBarDelegate, MKMapViewDelegate {
     
     var currentPlace: MKMapItem?
     
+    var isMapLoaded = false
+    
+    var isShowInfo1 = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -39,14 +44,36 @@ class SetLocationVC: UIViewController, UISearchBarDelegate, MKMapViewDelegate {
         
         self.mapView.delegate = self
         
-        initialLocation = CLLocation(latitude: 37.332308, longitude: -122.030733)
-        setAnnotation("Current Location", subTitle: "", coordinate: initialLocation.coordinate)
-        setOverlay(initialLocation.coordinate)
-        moveMapToLocation(initialLocation)
+        let defaultLocation = CLLocation(latitude: 37.332308, longitude: -122.030733)
+        setAnnotation("Current Location", subTitle: "", coordinate: defaultLocation.coordinate)
+        setOverlay(defaultLocation.coordinate)
+        moveMapToLocation(defaultLocation)
         
         initializeSearch()
         
         //searchIconMakeDragable()
+        
+        
+        GeoFencing.getNewLocationUpdates { (location) -> Void in
+            
+            iLog("GeoFencing.getLocationUpdates: \(location)")
+            
+            if self.isMoveToCurrentLocation.on {
+                
+                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    
+                    self.initialLocation = location
+                    self.setAnnotation("Current Location", subTitle: "", coordinate: self.initialLocation.coordinate)
+                    self.updateAnnotationBoundryTitle()
+                    self.setOverlay(self.initialLocation.coordinate)
+                    self.moveMapToLocation(self.initialLocation)
+                    
+                })
+                
+
+            }
+            
+        }
         
     }
     
@@ -61,7 +88,7 @@ class SetLocationVC: UIViewController, UISearchBarDelegate, MKMapViewDelegate {
     }
     
     func moveMapToLocation(location: CLLocation){
-        let regionRadius: CLLocationDistance = 1000
+        let regionRadius: CLLocationDistance = 500
         let coordinate = MKCoordinateRegionMakeWithDistance(location.coordinate, regionRadius * 2.0, regionRadius * 2.0)
         mapView.setRegion(coordinate, animated: true)
     }
@@ -283,7 +310,20 @@ class SetLocationVC: UIViewController, UISearchBarDelegate, MKMapViewDelegate {
     }
     
     // mapkit methods
+    
+    func mapViewDidFinishLoadingMap(mapView: MKMapView) {
+        self.isMapLoaded = true
+    }
 
+    func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        
+        if self.isMapLoaded && self.isMoveToCurrentLocation.on && !self.isShowInfo1 {
+            self.isShowInfo1 = true
+            Notification.notify("Info", msg: "To move map Please turn off 'Move To Current Location'", showTime: 3.0)
+        }
+
+    }
+    
     func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
         
         if overlay is MKCircle {
@@ -342,7 +382,7 @@ class SetLocationVC: UIViewController, UISearchBarDelegate, MKMapViewDelegate {
         
         self.mapView.setVisibleMapRect(circle.boundingMapRect, edgePadding: UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding), animated: true)
         
-        self.mapView.selectAnnotation(self.mapView.annotations[0], animated: true)
+        //self.mapView.selectAnnotation(self.mapView.annotations[0], animated: true)
         
         
         self.updateAnnotationBoundryTitle() // update radius in annotation
@@ -357,10 +397,6 @@ class SetLocationVC: UIViewController, UISearchBarDelegate, MKMapViewDelegate {
             annotation.title = title
         }
         self.mapView.addAnnotation(annotation)
-        
-        updateAnnotationBoundryTitle()
-        
-        self.mapView.selectAnnotation(annotation, animated: true)
     }
     
     func updateAnnotationBoundryTitle(){
@@ -370,14 +406,16 @@ class SetLocationVC: UIViewController, UISearchBarDelegate, MKMapViewDelegate {
         isUpdateAnnotationBoundryTitleRunning = true
         
         backgroundThread(0.3, background: nil) { () -> Void in
-            
-            let oldAnnotation = self.mapView.annotations[0]
+
             self.mapView.removeAnnotations(self.mapView.annotations) // remove all old
             
             let annotation = MKPointAnnotation()
-            annotation.coordinate = oldAnnotation.coordinate
-            if oldAnnotation.title != nil {
-                annotation.title = oldAnnotation.title!!
+            annotation.coordinate = self.initialLocation.coordinate
+            
+            if self.currentPlace != nil {
+                annotation.title = self.currentPlace!.name
+            }else{
+                annotation.title = "Current Location"
             }
             
             if self.currentRadius >= 1000 {
@@ -390,7 +428,9 @@ class SetLocationVC: UIViewController, UISearchBarDelegate, MKMapViewDelegate {
             
             self.mapView.addAnnotation(annotation)
             
-            self.mapView.selectAnnotation(annotation, animated: true)
+            if !self.isMoveToCurrentLocation.on {
+                self.mapView.selectAnnotation(annotation, animated: false)
+            }
             
             self.isUpdateAnnotationBoundryTitleRunning = false
             
@@ -438,6 +478,8 @@ class SetLocationVC: UIViewController, UISearchBarDelegate, MKMapViewDelegate {
         
         
         oldRadiusSliderValue = sender.value
+        
+        self.isMoveToCurrentLocation.setOn(false, animated: true)
     }
     
     
@@ -455,6 +497,13 @@ class SetLocationVC: UIViewController, UISearchBarDelegate, MKMapViewDelegate {
         
     }
     
+    @IBAction func moveToCurrentLocationSwitched(sender: UISwitch) {
+        
+        if sender.on {
+            self.isShowInfo1 = false
+        }
+        
+    }
     
     /*
     // MARK: - Navigation

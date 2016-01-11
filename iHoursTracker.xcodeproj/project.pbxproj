@@ -22,7 +22,7 @@
 		CDE54C371C3FE8C5000570B4 /* SetLocationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE54C361C3FE8C5000570B4 /* SetLocationVC.swift */; };
 		CDE54C3A1C3FEB2D000570B4 /* GeoFencing.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE54C391C3FEB2D000570B4 /* GeoFencing.swift */; };
 		CDE54C3C1C3FEB7F000570B4 /* BackgroundTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE54C3B1C3FEB7F000570B4 /* BackgroundTask.swift */; };
-		CDE54C3F1C3FEC08000570B4 /* notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE54C3E1C3FEC08000570B4 /* notification.swift */; };
+		CDE54C3F1C3FEC08000570B4 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE54C3E1C3FEC08000570B4 /* Notification.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,7 +55,7 @@
 		CDE54C361C3FE8C5000570B4 /* SetLocationVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetLocationVC.swift; sourceTree = "<group>"; };
 		CDE54C391C3FEB2D000570B4 /* GeoFencing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoFencing.swift; sourceTree = "<group>"; };
 		CDE54C3B1C3FEB7F000570B4 /* BackgroundTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundTask.swift; sourceTree = "<group>"; };
-		CDE54C3E1C3FEC08000570B4 /* notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = notification.swift; sourceTree = "<group>"; };
+		CDE54C3E1C3FEC08000570B4 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,7 +192,7 @@
 			children = (
 				CDE54C381C3FEB1B000570B4 /* GeoFencing */,
 				CDE54C3B1C3FEB7F000570B4 /* BackgroundTask.swift */,
-				CDE54C3E1C3FEC08000570B4 /* notification.swift */,
+				CDE54C3E1C3FEC08000570B4 /* Notification.swift */,
 				CD8246191C40F1370068334A /* Reachability.swift */,
 			);
 			name = API;
@@ -248,6 +248,11 @@
 				TargetAttributes = {
 					5DCAD34A1C392F590023F620 = {
 						CreatedOnToolsVersion = 6.1;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					5DCAD35F1C392F590023F620 = {
 						CreatedOnToolsVersion = 6.1;
@@ -309,7 +314,7 @@
 				5DCAD3511C392F590023F620 /* AppDelegate.swift in Sources */,
 				CD20121A1C3FB62700539CDF /* helpers.swift in Sources */,
 				CDE54C3C1C3FEB7F000570B4 /* BackgroundTask.swift in Sources */,
-				CDE54C3F1C3FEC08000570B4 /* notification.swift in Sources */,
+				CDE54C3F1C3FEC08000570B4 /* Notification.swift in Sources */,
 				CDE54C331C3FCB0F000570B4 /* SettingsVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
