@@ -105,7 +105,9 @@ class AddJobVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, 
         
         iLog("ready to go.")
         
+        let jobRateAsInt = rateValue.text?.convertToInt()
         
+        JobsManager.addJob(jobName.text!, jobRate: jobRateAsInt!, rateType: JobRateType.Daily)
         
     }
     

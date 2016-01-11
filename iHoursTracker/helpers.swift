@@ -290,7 +290,15 @@ func hideNetworkActivityIndicator(){
     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
 }
 
-
+extension String {
+    func convertToInt()->Int?{
+        
+        let asInt = Int(self)
+        if asInt == nil { return nil }
+        
+        return asInt
+    }
+}
 
 extension UIView{
     func setCornerRadiusRound(cornerRadius: CGFloat){
