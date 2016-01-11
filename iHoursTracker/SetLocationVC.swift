@@ -505,6 +505,9 @@ class SetLocationVC: UIViewController, UISearchBarDelegate, MKMapViewDelegate {
         
     }
     
+    
+    
+    
     /*
     // MARK: - Navigation
 
