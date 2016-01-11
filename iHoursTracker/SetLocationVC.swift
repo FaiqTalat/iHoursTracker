@@ -259,7 +259,7 @@ class SetLocationVC: UIViewController, UISearchBarDelegate, MKMapViewDelegate {
         if searchIsRunning {return}
         
         searchIsRunning = true
-        backgroundThread(0.2, background: nil) { () -> Void in
+        backgroundThread(2.0, background: nil) { () -> Void in
             
             self.searchLocation(searchBar.text!)
             
@@ -358,6 +358,8 @@ class SetLocationVC: UIViewController, UISearchBarDelegate, MKMapViewDelegate {
         }
         self.mapView.addAnnotation(annotation)
         
+        updateAnnotationBoundryTitle()
+        
         self.mapView.selectAnnotation(annotation, animated: true)
     }
     
@@ -379,7 +381,8 @@ class SetLocationVC: UIViewController, UISearchBarDelegate, MKMapViewDelegate {
             }
             
             if self.currentRadius >= 1000 {
-                var radiusAsDouble: Double = (Double(self.currentRadius) / 1000.00) as Double
+                var radiusAsDouble: Double = Double(self.currentRadius) / 1000.00
+                radiusAsDouble = round(1000 * radiusAsDouble) / 1000
                 annotation.subtitle = "\(radiusAsDouble) km Radius"
             }else{
                 annotation.subtitle = "\(Int(self.currentRadius)) m Radius"
@@ -438,7 +441,19 @@ class SetLocationVC: UIViewController, UISearchBarDelegate, MKMapViewDelegate {
     }
     
     
+    @IBAction func plusOneKm(sender: UIButton) {
+        
+        setCircleRadius(currentRadius + 1000)
+        
+    }
 
+    @IBAction func minusOneKm(sender: UIButton) {
+        
+        if currentRadius < 1000 {return}
+        
+        setCircleRadius(currentRadius - 1000)
+        
+    }
     
     
     /*

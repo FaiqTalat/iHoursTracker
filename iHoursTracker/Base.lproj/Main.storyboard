@@ -114,6 +114,9 @@
                                 <state key="normal" title="Add">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="addJobBtnPressed:" destination="DiL-LG-v8g" eventType="touchUpInside" id="IEc-m3-upa"/>
+                                </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="GA8-M0-JQz" userLabel="searched places list">
                                 <rect key="frame" x="0.0" y="220" width="600" height="0.0"/>
@@ -240,7 +243,7 @@
                                                 <color key="barTintColor" red="0.30196078430000001" green="0.63921568630000003" blue="0.45882352939999999" alpha="1" colorSpace="calibratedRGB"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </searchBar>
-                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="250" minValue="1" maxValue="500" translatesAutoresizingMaskIntoConstraints="NO" id="95J-dc-uXJ">
+                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="100" minValue="1" maxValue="500" translatesAutoresizingMaskIntoConstraints="NO" id="95J-dc-uXJ">
                                                 <rect key="frame" x="33" y="237" width="534" height="31"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <color key="tintColor" red="0.30196078430000001" green="0.63921568630000003" blue="0.45882352939999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -252,14 +255,80 @@
                                                     <action selector="radiusSliderChanged:" destination="6xW-yG-Ymm" eventType="valueChanged" id="usH-WM-rpD"/>
                                                 </connections>
                                             </slider>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cfB-Wc-dEh">
+                                                <rect key="frame" x="555" y="56" width="40" height="30"/>
+                                                <color key="backgroundColor" white="1" alpha="0.75" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="30" id="EH4-zf-lS3"/>
+                                                    <constraint firstAttribute="width" constant="40" id="kV5-dr-1oz"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="10"/>
+                                                <size key="titleShadowOffset" width="1" height="1"/>
+                                                <state key="normal" title="+ 1 Km">
+                                                    <color key="titleColor" red="0.1647058824" green="0.63921568630000003" blue="0.14901960780000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
+                                                <state key="selected">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="titleShadowColor" red="0.76078431369999999" green="0.76078431369999999" blue="0.76078431369999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
+                                                <state key="highlighted">
+                                                    <color key="titleColor" red="0.76078431369999999" green="0.76078431369999999" blue="0.76078431369999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="3"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="plusOneKm:" destination="6xW-yG-Ymm" eventType="touchUpInside" id="1VP-Fg-05F"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2pN-aF-rXl">
+                                                <rect key="frame" x="555" y="94" width="40" height="30"/>
+                                                <color key="backgroundColor" white="1" alpha="0.75" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="40" id="K05-EE-PoB"/>
+                                                    <constraint firstAttribute="height" constant="30" id="j6g-Sk-NH1"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="10"/>
+                                                <size key="titleShadowOffset" width="1" height="1"/>
+                                                <state key="normal" title="- 1 Km">
+                                                    <color key="titleColor" red="1" green="0.50196081399917603" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
+                                                <state key="selected">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="titleShadowColor" red="0.76078431369999999" green="0.76078431369999999" blue="0.76078431369999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
+                                                <state key="highlighted">
+                                                    <color key="titleColor" red="0.76078431369999999" green="0.76078431369999999" blue="0.76078431369999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <state key="focused">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="titleShadowColor" red="0.76078431369999999" green="0.76078431369999999" blue="0.76078431369999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="3"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="minusOneKm:" destination="6xW-yG-Ymm" eventType="touchUpInside" id="Yo4-lF-NZ3"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstItem="THN-99-cKE" firstAttribute="top" secondItem="KGM-6h-kV1" secondAttribute="top" id="5H3-nE-UBs"/>
                                             <constraint firstAttribute="trailing" secondItem="HCM-Ns-beW" secondAttribute="trailing" id="Ld5-YE-rdN"/>
+                                            <constraint firstItem="cfB-Wc-dEh" firstAttribute="top" secondItem="5jj-gM-piV" secondAttribute="bottom" constant="6" id="Mpj-F6-8p7"/>
                                             <constraint firstItem="HCM-Ns-beW" firstAttribute="top" secondItem="KGM-6h-kV1" secondAttribute="top" id="OUd-uX-qHS"/>
                                             <constraint firstItem="95J-dc-uXJ" firstAttribute="leading" secondItem="KGM-6h-kV1" secondAttribute="leading" constant="35" id="Pvm-0g-4XL"/>
+                                            <constraint firstItem="2pN-aF-rXl" firstAttribute="top" secondItem="cfB-Wc-dEh" secondAttribute="bottom" constant="8" id="Ryv-FL-w0W"/>
+                                            <constraint firstAttribute="trailing" secondItem="2pN-aF-rXl" secondAttribute="trailing" constant="5" id="Sai-qZ-pOj"/>
                                             <constraint firstAttribute="trailing" secondItem="95J-dc-uXJ" secondAttribute="trailing" constant="35" id="XZk-zy-4nZ"/>
+                                            <constraint firstAttribute="trailing" secondItem="cfB-Wc-dEh" secondAttribute="trailing" constant="5" id="dSk-FW-8Zr"/>
                                             <constraint firstAttribute="bottom" secondItem="95J-dc-uXJ" secondAttribute="bottom" constant="10" id="fZd-G9-wVp"/>
                                             <constraint firstAttribute="trailing" secondItem="5jj-gM-piV" secondAttribute="trailing" id="frX-PT-fmx"/>
                                             <constraint firstAttribute="bottom" secondItem="HCM-Ns-beW" secondAttribute="bottom" id="huN-hK-1zz"/>

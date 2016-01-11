@@ -342,6 +342,13 @@ extension MKMapItem {
 
 }
 
+public extension Double {
+    func roundToDecimals(decimals: Int = 2) -> Double {
+        let multiplier = Double(10^decimals)
+        return round(multiplier * self) / multiplier
+    }
+}
+
 
 
 

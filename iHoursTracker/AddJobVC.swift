@@ -45,6 +45,10 @@ class AddJobVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, 
         
         locationSegmentControlStateChanged(self.locationSegmentControl) // set according to current selected segment
         
+        jobName.setValidation(1, maxTextLimit: 100, keyboardType: UIKeyboardType.Default, isRequired: true)
+        rateValue.setValidation(1, maxTextLimit: 100, keyboardType: UIKeyboardType.NumberPad, isRequired: true)
+        
+        
     }
     
  
@@ -93,8 +97,17 @@ class AddJobVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, 
     }
 
     
-    
-    
+    @IBAction func addJobBtnPressed(sender: UIButton) {
+        
+        if !self.view.validateAllTextFields() {
+            return
+        }
+        
+        iLog("ready to go.")
+        
+        
+        
+    }
     
     
     
