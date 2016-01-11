@@ -23,7 +23,7 @@ class AddJobVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, 
     @IBOutlet weak var locationContainerView: UIView!
     var locationContainerVC: SetLocationVC!
     
-    let rateTypeData = ["Daily", "Weekly", "Monthly", "Hourly", "Quarterly", "Yearly"]
+    static let rateTypeData = ["Daily", "Weekly", "Monthly", "Hourly", "Quarterly", "Yearly"]
     
     var searchedPlaces = [MKMapItem]()
     
@@ -47,10 +47,18 @@ class AddJobVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, 
         
         jobName.setValidation(1, maxTextLimit: 100, keyboardType: UIKeyboardType.Default, isRequired: true)
         rateValue.setValidation(1, maxTextLimit: 100, keyboardType: UIKeyboardType.NumberPad, isRequired: true)
-        
-        
+
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        GeoFencing.sharedObj.locationManager.startUpdatingLocation()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        GeoFencing.sharedObj.locationManager.stopUpdatingLocation()
+    }
  
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -64,11 +72,11 @@ class AddJobVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, 
     }
     
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return rateTypeData.count
+        return AddJobVC.rateTypeData.count
     }
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return rateTypeData[row]
+        return AddJobVC.rateTypeData[row]
     }
     
     func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView?) -> UIView {
@@ -80,7 +88,7 @@ class AddJobVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, 
             pickerLabel?.textColor = appGreenColor
             pickerLabel?.textAlignment = .Center
         }
-        pickerLabel?.text = rateTypeData[row]
+        pickerLabel?.text = AddJobVC.rateTypeData[row]
         
         return pickerLabel!
     }
@@ -105,9 +113,24 @@ class AddJobVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, 
         
         iLog("ready to go.")
         
-        let jobRateAsInt = rateValue.text?.convertToInt()
+        let jobRateAsFloat = rateValue.text?.convertToFloat()
         
-        JobsManager.addJob(jobName.text!, jobRate: jobRateAsInt!, rateType: JobRateType.Daily)
+        if jobRateAsFloat == nil { iLog("error jobRateAsFloat: \(jobRateAsFloat)"); return }
+    
+        let locationRadius = Float(self.locationContainerVC.currentRadius)
+        
+        let rateTypeIndex = rateType.selectedRowInComponent(0)
+        
+        iLog("New Job Going To Add, \(jobName.text!) | \(jobRateAsFloat!) | \(rateTypeIndex) | \(self.locationContainerVC.currentAnnotationCoordinate) | \(locationRadius)")
+        
+        let isError = DB.addJob(jobName.text!, rate: jobRateAsFloat!, rateType: rateTypeIndex, locationCordinate: self.locationContainerVC.currentAnnotationCoordinate, radius: locationRadius)
+    
+        if isError != nil {
+            iLog("isError: \(isError)")
+            return
+        }
+        
+        //DB.logJobs()
         
     }
     

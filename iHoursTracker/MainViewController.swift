@@ -18,10 +18,6 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
-
-        //setViewDefaults()
-        
     }
     
     override func viewDidLayoutSubviews() {
@@ -31,12 +27,6 @@ class MainViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-
-    
-    func setViewDefaults(){
-
-        
     }
 
 }

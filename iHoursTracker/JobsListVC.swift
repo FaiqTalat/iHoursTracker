@@ -10,12 +10,26 @@ import UIKit
 
 class JobsListVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
+    @IBOutlet weak var jobsListTVC: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        if DB.jobs.count < 1 {
+
+        }
+        
     }
 
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        jobsListTVC.reloadData()
+        
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -23,20 +37,30 @@ class JobsListVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return DB.jobs.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell1")
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell1") as! JobsListTableViewCell
         
-        return cell!
+        let job = DB.jobs[indexPath.row]
+        
+        cell.name.text = job.title!
+        cell.rateAmount.text = "\(job.rate!)"
+        cell.currencyType.text = "\( getJobTypeTitleByIndex(job.rateType!) )"
+        cell.joinDate.text = "\(job.joinDate)"
+        
+        return cell
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 60
     }
     
-    
+    func getJobTypeTitleByIndex(index: NSNumber)->String{
+        //iLog("index: \(index)")
+        return AddJobVC.rateTypeData[Int(index)]
+    }
     
     
     

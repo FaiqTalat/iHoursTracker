@@ -290,14 +290,39 @@ func hideNetworkActivityIndicator(){
     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
 }
 
+extension NSDate {
+    func getDateAsString(){
+        
+    }
+}
+
 extension String {
+    
     func convertToInt()->Int?{
         
         let asInt = Int(self)
         if asInt == nil { return nil }
         
-        return asInt
+        return asInt!
     }
+    
+    func convertToDouble()->Double?{
+        
+        let asDouble = Double(self)
+        if asDouble == nil { return nil }
+        
+        return asDouble!
+    }
+    
+    func convertToFloat()->Float?{
+        
+        let asFloat = Float(self)
+        if asFloat == nil { return nil }
+        
+        return asFloat!
+    }
+    
+    
 }
 
 extension UIView{

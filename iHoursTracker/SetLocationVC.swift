@@ -37,6 +37,8 @@ class SetLocationVC: UIViewController, UISearchBarDelegate, MKMapViewDelegate {
     
     var isShowInfo1 = false
     
+    var currentAnnotationCoordinate: CLLocationCoordinate2D!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -397,6 +399,9 @@ class SetLocationVC: UIViewController, UISearchBarDelegate, MKMapViewDelegate {
             annotation.title = title
         }
         self.mapView.addAnnotation(annotation)
+        
+        self.currentAnnotationCoordinate = coordinate
+        
     }
     
     func updateAnnotationBoundryTitle(){
@@ -500,7 +505,10 @@ class SetLocationVC: UIViewController, UISearchBarDelegate, MKMapViewDelegate {
     @IBAction func moveToCurrentLocationSwitched(sender: UISwitch) {
         
         if sender.on {
+            GeoFencing.sharedObj.locationManager.startUpdatingLocation()
             self.isShowInfo1 = false
+        }else if !sender.on {
+            GeoFencing.sharedObj.locationManager.stopUpdatingLocation()
         }
         
     }
