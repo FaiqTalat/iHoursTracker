@@ -148,9 +148,18 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		CDB51FFA1C4644F20039D81F /* NewScreens */ = {
+			isa = PBXGroup;
+			children = (
+				CDE54C301C3FCB02000570B4 /* JobsListVC.swift */,
+			);
+			name = NewScreens;
+			sourceTree = "<group>";
+		};
 		CDE54C2B1C3FCABC000570B4 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				CDB51FFA1C4644F20039D81F /* NewScreens */,
 				CDE54C2C1C3FCAC4000570B4 /* Main View Controller */,
 				CDE54C2D1C3FCAD1000570B4 /* Tabs */,
 			);
@@ -170,7 +179,6 @@
 			children = (
 				CDE54C351C3FDD7B000570B4 /* Set Location Controller */,
 				CDE54C2E1C3FCAF3000570B4 /* AddJobVC.swift */,
-				CDE54C301C3FCB02000570B4 /* JobsListVC.swift */,
 				CDAA5C141C43F0C7008D5E4B /* JobsListTableViewCell.swift */,
 				CDE54C321C3FCB0F000570B4 /* SettingsVC.swift */,
 			);
@@ -268,6 +276,7 @@
 				TargetAttributes = {
 					5DCAD34A1C392F590023F620 = {
 						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = SUBZ24DP5B;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -468,8 +477,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = iHoursTracker/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.FT.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -483,8 +493,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = iHoursTracker/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.FT.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";

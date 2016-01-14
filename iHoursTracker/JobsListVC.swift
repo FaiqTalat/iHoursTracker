@@ -7,9 +7,23 @@
 //
 
 import UIKit
+import CoreData
 
 class JobsListVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
+    @IBOutlet weak var topBarView: UIView!
+    // menu
+    @IBOutlet weak var menuIconBgView: UIView!
+    @IBOutlet weak var menuIconBar1: UIView!
+    @IBOutlet weak var menuIconBar2: UIView!
+    @IBOutlet weak var menuIconBar3: UIView!
+    var MenuIconObject: MenuIcon!
+    
+    var bgView: UIView!
+    var bgBlurView: UIVisualEffectView!
+    
+    var menuIconState = 0 // 0 as Menu Icon & 1 as Back Btn
+    
     @IBOutlet weak var jobsListTVC: UITableView!
     
     override func viewDidLoad() {
@@ -30,6 +44,20 @@ class JobsListVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+
+        bgView = UIView(frame: CGRect(x: self.view.frame.size.width, y: 20, width: self.view.frame.size.width, height: self.view.frame.size.height - 20))
+        bgView.backgroundColor = UIColor.lightGrayColor()
+        bgView.alpha = 0
+        self.view.addSubview(bgView)
+        
+        // for plus button
+        self.jobsListTVC.contentInset.bottom = 70
+        
+        createMenuObject()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -37,18 +65,23 @@ class JobsListVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return DB.jobs.count
+        //return DB.jobs.count
+        return 10
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell1") as! JobsListTableViewCell
         
-        let job = DB.jobs[indexPath.row]
+//        let job = DB.jobs[indexPath.row]
+//        
+//        cell.name.text = job.title!
+//        cell.rateAmount.text = "\(job.rate!)"
+//        cell.currencyType.text = "\( getJobTypeTitleByIndex(job.rateType!) )"
+//        
+//        if job.joinDate != nil {
+//            cell.joinDate.text = "\(job.joinDate!.getDateAsString())"
+//        }
         
-        cell.name.text = job.title!
-        cell.rateAmount.text = "\(job.rate!)"
-        cell.currencyType.text = "\( getJobTypeTitleByIndex(job.rateType!) )"
-        cell.joinDate.text = "\(job.joinDate)"
         
         return cell
     }
@@ -57,11 +90,71 @@ class JobsListVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         return 60
     }
     
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        let job = DB.jobs[indexPath.row]
+        
+        switch editingStyle {
+        case .Delete:
+            
+
+            let isDeleted = DB.delJob(job)
+            
+            if isDeleted {
+                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Bottom)
+            }
+            
+            
+            
+        default:
+            return
+        }
+        
+    }
+    
     func getJobTypeTitleByIndex(index: NSNumber)->String{
         //iLog("index: \(index)")
         return AddJobVC.rateTypeData[Int(index)]
     }
     
+    
+    
+    
+    // Menu Btns methods
+    
+    @IBAction func menuBtnPressed(sender: AnyObject) {
+        _log("\(__FUNCTION__)")
+        
+        if MenuIconObject.state == 0 { // orignal btn
+            
+            setMenuIconAsBack()
+        }else if MenuIconObject.state == 1{ // back btn
+            
+            setMenuIconAsOrignal()
+        }
+        
+    }
+    
+    func createMenuObject(){
+        iLog("")
+        
+        self.MenuIconObject = MenuIcon(bar1: menuIconBar1, bar2: menuIconBar2, bar3: menuIconBar3, bgView: self.bgView)
+    }
+    
+    func setMenuIconAsBack(){
+        
+        MenuIconObject._bar1Rotate315Degrees()
+        MenuIconObject._bar3RotateMinus315Degrees()
+        MenuIconObject.state = 1
+        
+    }
+    
+    func setMenuIconAsOrignal(){
+        
+        MenuIconObject.getBackToOrignalState()
+        MenuIconObject.state = 0
+        
+    }
     
     
     /*

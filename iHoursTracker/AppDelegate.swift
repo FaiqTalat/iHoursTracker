@@ -22,23 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if launchOptions == nil { // app launch normal state
             iLog("didFinishLaunchingWithOptions")
-            
-            if let tabBarVC = self.window?.rootViewController as? UITabBarController {
-                rootTabBarVC = tabBarVC
-            }
-            
-            setTopStatusBarColor(appGreenColor)
-            
-            // reset app badge number
-            application.applicationIconBadgeNumber = 0
-            
-            // start geofencing when app is running
-            GeoFencing.startMonitoringForAllRegions()
-            
-            // start internet connectivity monitoring
-            //Reachability.startReachability()
-            
-            DB.loadJobs()
+
+            appDefaults()
             
         } else if (launchOptions![UIApplicationLaunchOptionsLocationKey] != nil) { // app launch by geofencing location updates
             
@@ -51,12 +36,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return true
     }
-    
-    func test(){
+
+    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
+        
+        
         
     }
     
-
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.

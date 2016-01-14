@@ -59,6 +59,31 @@ class DB {
         
     }
     
+    static func delJob(job: Jobs)->Bool{
+        
+        
+        // remove the deleted item from the model
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let managedContext = appDelegate.managedObjectContext
+        managedContext.deleteObject(job as NSManagedObject)
+        //myData.removeAtIndex(indexPath.row)
+        
+        do {
+            
+            try managedContext.save()
+            
+            loadJobs()
+            
+            return true
+            
+        }catch let error as NSError {
+            iLog("newJob Could not delete \(error), \(error.userInfo)")
+            
+            return false
+        }
+
+    }
+    
     static func loadJobs(){
         
         let fetchRequest = NSFetchRequest(entityName: DB.kEntityName)
@@ -68,16 +93,21 @@ class DB {
             
             let results = try managedContext.executeFetchRequest(fetchRequest)
             
-            // when empty jobs list so auto open add job vc
-            if results.count < 1 {
-                rootTabBarVC.selectedIndex = 0
-            }
+//            // when empty jobs list so auto open add job vc
+//            if results.count < 1 {
+//                rootTabBarVC.selectedIndex = 0
+//            }
             
             jobs = [Jobs]()
             
             if let _jobs = results as? [Jobs] {
                 self.jobs = _jobs
                 logJobs()
+                
+                
+                // start geofencing when app is running
+                GeoFencing.startMonitoringForAllRegions()
+                
             }
             
 

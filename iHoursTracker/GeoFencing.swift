@@ -123,6 +123,23 @@ class GeoFencing: NSObject, CLLocationManagerDelegate {
         // create class obj and save obj in sharedObj
         sharedObj = GeoFencing.sharedObj
         
+        for job in DB.jobs{
+            
+            let latitudeAsCLLocationDegrees = CLLocationDegrees(job.locationLat!)
+            let longitudeAsCLLocationDegrees = CLLocationDegrees(job.locationLong!)
+            let radius = CLLocationDistance(job.locationRadius!)
+            
+            if latitudeAsCLLocationDegrees != nil && longitudeAsCLLocationDegrees != nil {
+                
+                let region = RegionStruct(jobID: job.title!, location: GeoLocation(identifier: job.title!, latitude: latitudeAsCLLocationDegrees!, longitude: longitudeAsCLLocationDegrees!, radius: radius))
+                
+                addRegion(region)
+                
+            }
+            
+        }
+        
+        
     }
     
     class func startMonitoringForAllRegionsWhenAppSuspended(){
@@ -138,6 +155,8 @@ class GeoFencing: NSObject, CLLocationManagerDelegate {
         sharedObj = GeoFencing.sharedObj
         
     }
+    
+    
     
     class func stopMonitoringForAllRegions(){
         _log(__FUNCTION__)
@@ -229,8 +248,6 @@ class GeoFencing: NSObject, CLLocationManagerDelegate {
         
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         
-        locationManager.allowsBackgroundLocationUpdates = true
-        
         
         // when app is opened and first time start so if user in auto in
         let isAuthorizedForMonitoring = CLLocationManager.authorizationStatus()
@@ -299,7 +316,13 @@ class GeoFencing: NSObject, CLLocationManagerDelegate {
                 // extend its background handler limit
                 self.lastBgHandlerLimitExtendTimer = NSTimer.scheduledTimerWithTimeInterval(30.0, target: self, selector: "bgHandlerLimitExtend", userInfo: nil, repeats: true)
 
+                let jobID = region.identifier
+                
                 // do anything when its clockout
+                
+                // clocked in
+                Notification.localNotify("out from jobID: \(jobID)")
+                
             
             }
         
@@ -362,10 +385,10 @@ class GeoFencing: NSObject, CLLocationManagerDelegate {
                         // do work when app is suspended and need work more than 10 second because apple auto suspend app when it exceed its 10 second.
                         self.isCheckInProcessIsRunning = true
                         
-                        //let jobID = region.identifier
+                        let jobID = region.identifier
                         
                         // clocked in
-                        
+                        Notification.localNotify("in at jobID: \(jobID)")
                         
                         
                     }

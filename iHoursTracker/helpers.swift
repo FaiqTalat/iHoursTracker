@@ -291,8 +291,9 @@ func hideNetworkActivityIndicator(){
 }
 
 extension NSDate {
-    func getDateAsString(){
-        
+    func getDateAsString()->String{
+        let time = NSDateFormatter.localizedStringFromDate(self, dateStyle: .MediumStyle, timeStyle: .MediumStyle)
+        return time
     }
 }
 
@@ -383,5 +384,273 @@ public extension Double {
 }
 
 
+
+
+
+
+
+
+
+// MARK: settings
+let appStatusBarBgColor = UIColor(red: 83.0/255.0, green: 147.0/255.0, blue: 112.0/255.0, alpha: 1.0)
+
+// public variables and constants
+let appStatusBarView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.mainScreen().bounds.size.width, height: 20.0))
+
+
+// public methods
+func appDefaults(){
+    _log("\(__FUNCTION__)")
+    
+    let _app = UIApplication.sharedApplication()
+    //let _appDelegate = UIApplication.sharedApplication().delegate
+    let _window = UIApplication.sharedApplication().delegate?.window
+    
+    if let tabBarVC = _window??.rootViewController as? UITabBarController {
+        rootTabBarVC = tabBarVC
+    }
+    
+    setTopStatusBarColor(appGreenColor)
+    
+    // reset app badge number
+    _app.applicationIconBadgeNumber = 0
+    
+    // start internet connectivity monitoring
+    //Reachability.startReachability()
+    
+    DB.loadJobs()
+    
+    Notification.localNotify("1111")
+
+    
+    setAppStatusBar()
+    
+}
+
+func setAppStatusBar(){
+    _log("\(__FUNCTION__)")
+    
+    UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
+    appStatusBarView.backgroundColor = appStatusBarBgColor
+    UIApplication.sharedApplication().delegate?.window??.rootViewController?.view.addSubview(appStatusBarView)
+    UIApplication.sharedApplication().delegate?.window??.makeKeyAndVisible()
+    
+}
+
+
+
+// helper func's
+func _log(data: AnyObject?){
+    if isAppLog {
+        print("appLog: time: \(currentTime())")
+        
+        if data != nil {
+            print(data!)
+        }else{
+            print(data)
+        }
+        
+        print("")
+        
+    }
+}
+
+func getColorFromRGB(r: CGFloat,g: CGFloat,b: CGFloat)->UIColor{
+    return UIColor(red: r/255.0, green: g/255.0, blue: b/255.0, alpha: 1.0)
+}
+
+// extensions
+
+extension UIColor
+{
+    class func generate(red: Int, green: Int, blue: Int)->UIColor
+    {
+        let newRed = CGFloat(red)/255
+        let newGreen = CGFloat(green)/255
+        let newBlue = CGFloat(blue)/255
+        
+        return UIColor(red: newRed, green: newGreen, blue: newBlue, alpha: 1.0)
+    }
+}
+
+// for custom menu button
+
+class MenuIcon{
+    var bar1: UIView!
+    var bar2: UIView!
+    var bar3: UIView!
+    
+    let bar1FrameOrignal: CGRect!
+    let bar2FrameOrignal: CGRect!
+    let bar3FrameOrignal: CGRect!
+    let bgViewFrameOrignal: CGRect!
+    
+    let bgView: UIView!
+    
+    var state = 0
+    
+    init(bar1: UIView, bar2: UIView, bar3: UIView, bgView: UIView){
+        self.bar1 = bar1
+        self.bar2 = bar2
+        self.bar3 = bar3
+        self.bgView = bgView
+        
+        self.bar1FrameOrignal = bar1.frame
+        self.bar2FrameOrignal = bar2.frame
+        self.bar3FrameOrignal = bar3.frame
+        self.bgViewFrameOrignal = bgView.frame
+        
+    }
+    
+    func _bar1Rotate315Degrees() {
+        
+        self.bar1.frame.size.width -= self.bar1.frame.size.width / 3
+        
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            
+            self.bar1.frame.origin.x = 14.7 + (self.bar1.frame.size.width / 3)
+            self.bar1.frame.origin.y = 14.0 + 0.3
+            self.bar1.transform = CGAffineTransformMakeRotation(315.01)
+            
+            }, completion: nil)
+        
+        
+        
+        
+        
+        UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.4, options: UIViewAnimationOptions.CurveEaseIn, animations: { () -> Void in
+            
+            self.bgView.frame.origin.x = 50
+            self.bgView.alpha = 1
+            
+            }, completion: nil)
+        
+        
+    }
+
+    
+    func _bar3RotateMinus315Degrees() {
+        
+        self.bar3.frame.size.width -= self.bar3.frame.size.width / 3
+        
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.bar3.frame.origin.x = 14.7 + (self.bar3.frame.size.width / 3)
+            self.bar3.frame.origin.y = 22.0 - 0.3
+            self.bar3.transform = CGAffineTransformMakeRotation(-315.01)
+            
+            }, completion: nil)
+        
+    }
+    
+    
+    func getBackToOrignalState() {
+        
+
+
+        
+        UIView.animateWithDuration(0.1, animations: { () -> Void in // rotate
+            
+            self.bar1.transform = CGAffineTransformMakeRotation(0)
+            self.bar3.transform = CGAffineTransformMakeRotation(0)
+            
+            
+            }) { (_bool) -> Void in
+                
+
+                
+                UIView.animateWithDuration(0.2, animations: { () -> Void in // set orignal origin's
+                    
+                    self.bar1.frame.origin = self.bar1FrameOrignal.origin
+                    self.bar3.frame.origin = self.bar3FrameOrignal.origin
+                    
+                    self.bar1.frame.size.width = self.bar1FrameOrignal.width
+                    self.bar3.frame.size.width = self.bar3FrameOrignal.width
+                    
+                    self.bgView.frame = self.bgViewFrameOrignal
+                    self.bgView.alpha = 0
+                    
+                    }) { (_bool) -> Void in
+
+                        
+                }
+                
+
+                
+                
+                
+                
+                
+        }
+        
+        
+        
+    }
+    
+    
+    
+    
+    
+    
+}
+
+extension UIView {
+    
+    func rotate315Degrees() {
+        _log("\(self.frame.origin)")
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.frame.origin.x = 15
+            self.frame.origin.y = 10
+            
+            self.transform = CGAffineTransformMakeRotation(315)
+            
+            //self.layoutIfNeeded()
+            
+            }, completion: nil)
+        
+    }
+    
+    func rotateMinus315Degrees() {
+        
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.frame.origin.x = 15
+            self.transform = CGAffineTransformMakeRotation(-315)
+            //self.layoutIfNeeded()
+            
+            }, completion: nil)
+        
+    }
+    
+    func getBackToOrignalState(orignalFrame: CGRect) {
+        
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            
+            //self.frame = orignalFrame
+            
+            self.transform = CGAffineTransformMakeRotation(0)
+            //self.layoutIfNeeded()
+            
+            }) { (_bool) -> Void in
+                // self.frame.origin.x = 10
+                
+        }
+        
+        
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            
+            self.frame.origin.x = 10
+            self.frame.origin.y = 9
+            
+            }) { (_bool) -> Void in
+                
+                
+        }
+        
+        
+    }
+    
+    
+    
+    
+}
 
 
