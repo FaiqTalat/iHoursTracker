@@ -12,6 +12,8 @@
 import Foundation
 import CoreData
 
+let rateTypeData = ["Daily", "Weekly", "Monthly", "Hourly", "Quarterly", "Yearly"]
+
 extension Jobs {
 
     @NSManaged var title: String?

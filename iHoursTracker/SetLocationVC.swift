@@ -24,7 +24,7 @@ class SetLocationVC: UIViewController, UISearchBarDelegate, MKMapViewDelegate {
     var isSearching = false
     var searchIsRunning = false
     
-    var addJobVC: AddJobVC!
+    var addJobVC: AddJobVC2!
     
     var currentRadius: CLLocationDistance = kDefaultRadiusForNewPlace
     var oldRadiusSliderValue: Float = 0.0

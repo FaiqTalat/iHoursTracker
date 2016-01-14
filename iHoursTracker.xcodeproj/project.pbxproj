@@ -14,6 +14,7 @@
 		5DCAD35B1C392F590023F620 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DCAD3591C392F590023F620 /* LaunchScreen.xib */; };
 		5DCAD3671C392F590023F620 /* iHoursTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DCAD3661C392F590023F620 /* iHoursTrackerTests.swift */; };
 		CD20121A1C3FB62700539CDF /* helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD2012191C3FB62700539CDF /* helpers.swift */; };
+		CD4106A91C47F38200EF8010 /* AddJobVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD4106A81C47F38200EF8010 /* AddJobVC.swift */; };
 		CD82461A1C40F1370068334A /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD8246191C40F1370068334A /* Reachability.swift */; };
 		CDAA5C0D1C43C64B008D5E4B /* Job.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDAA5C0C1C43C64B008D5E4B /* Job.swift */; };
 		CDAA5C151C43F0C7008D5E4B /* JobsListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDAA5C141C43F0C7008D5E4B /* JobsListTableViewCell.swift */; };
@@ -22,7 +23,7 @@
 		CDAA5C641C440FE7008D5E4B /* Jobs+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDAA5C621C440FE7008D5E4B /* Jobs+CoreDataProperties.swift */; };
 		CDAA5C651C440FE7008D5E4B /* Jobs.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDAA5C631C440FE7008D5E4B /* Jobs.swift */; };
 		CDE54C2A1C3FC927000570B4 /* ITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE54C291C3FC927000570B4 /* ITextField.swift */; };
-		CDE54C2F1C3FCAF3000570B4 /* AddJobVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE54C2E1C3FCAF3000570B4 /* AddJobVC.swift */; };
+		CDE54C2F1C3FCAF3000570B4 /* AddJobVC2.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE54C2E1C3FCAF3000570B4 /* AddJobVC2.swift */; };
 		CDE54C311C3FCB02000570B4 /* JobsListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE54C301C3FCB02000570B4 /* JobsListVC.swift */; };
 		CDE54C331C3FCB0F000570B4 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE54C321C3FCB0F000570B4 /* SettingsVC.swift */; };
 		CDE54C371C3FE8C5000570B4 /* SetLocationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE54C361C3FE8C5000570B4 /* SetLocationVC.swift */; };
@@ -53,6 +54,7 @@
 		5DCAD3651C392F590023F620 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5DCAD3661C392F590023F620 /* iHoursTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iHoursTrackerTests.swift; sourceTree = "<group>"; };
 		CD2012191C3FB62700539CDF /* helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = helpers.swift; sourceTree = "<group>"; };
+		CD4106A81C47F38200EF8010 /* AddJobVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddJobVC.swift; sourceTree = "<group>"; };
 		CD8246191C40F1370068334A /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		CDAA5C0C1C43C64B008D5E4B /* Job.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Job.swift; sourceTree = "<group>"; };
 		CDAA5C141C43F0C7008D5E4B /* JobsListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobsListTableViewCell.swift; sourceTree = "<group>"; };
@@ -62,7 +64,7 @@
 		CDAA5C621C440FE7008D5E4B /* Jobs+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Jobs+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		CDAA5C631C440FE7008D5E4B /* Jobs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Jobs.swift; sourceTree = "<group>"; };
 		CDE54C291C3FC927000570B4 /* ITextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ITextField.swift; sourceTree = "<group>"; };
-		CDE54C2E1C3FCAF3000570B4 /* AddJobVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddJobVC.swift; sourceTree = "<group>"; };
+		CDE54C2E1C3FCAF3000570B4 /* AddJobVC2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddJobVC2.swift; sourceTree = "<group>"; };
 		CDE54C301C3FCB02000570B4 /* JobsListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobsListVC.swift; sourceTree = "<group>"; };
 		CDE54C321C3FCB0F000570B4 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		CDE54C361C3FE8C5000570B4 /* SetLocationVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetLocationVC.swift; sourceTree = "<group>"; };
@@ -152,6 +154,8 @@
 			isa = PBXGroup;
 			children = (
 				CDE54C301C3FCB02000570B4 /* JobsListVC.swift */,
+				CDAA5C141C43F0C7008D5E4B /* JobsListTableViewCell.swift */,
+				CD4106A81C47F38200EF8010 /* AddJobVC.swift */,
 			);
 			name = NewScreens;
 			sourceTree = "<group>";
@@ -178,8 +182,7 @@
 			isa = PBXGroup;
 			children = (
 				CDE54C351C3FDD7B000570B4 /* Set Location Controller */,
-				CDE54C2E1C3FCAF3000570B4 /* AddJobVC.swift */,
-				CDAA5C141C43F0C7008D5E4B /* JobsListTableViewCell.swift */,
+				CDE54C2E1C3FCAF3000570B4 /* AddJobVC2.swift */,
 				CDE54C321C3FCB0F000570B4 /* SettingsVC.swift */,
 			);
 			name = Tabs;
@@ -339,13 +342,14 @@
 				CDAA5C651C440FE7008D5E4B /* Jobs.swift in Sources */,
 				CDE54C3A1C3FEB2D000570B4 /* GeoFencing.swift in Sources */,
 				CDAA5C0D1C43C64B008D5E4B /* Job.swift in Sources */,
-				CDE54C2F1C3FCAF3000570B4 /* AddJobVC.swift in Sources */,
+				CDE54C2F1C3FCAF3000570B4 /* AddJobVC2.swift in Sources */,
 				CDE54C2A1C3FC927000570B4 /* ITextField.swift in Sources */,
 				CDE54C371C3FE8C5000570B4 /* SetLocationVC.swift in Sources */,
 				CDAA5C641C440FE7008D5E4B /* Jobs+CoreDataProperties.swift in Sources */,
 				CDAA5C571C43F6B5008D5E4B /* JobsModel.xcdatamodeld in Sources */,
 				CDAA5C171C43F4B8008D5E4B /* DB.swift in Sources */,
 				5DCAD3511C392F590023F620 /* AppDelegate.swift in Sources */,
+				CD4106A91C47F38200EF8010 /* AddJobVC.swift in Sources */,
 				CDAA5C151C43F0C7008D5E4B /* JobsListTableViewCell.swift in Sources */,
 				CD20121A1C3FB62700539CDF /* helpers.swift in Sources */,
 				CDE54C3C1C3FEB7F000570B4 /* BackgroundTask.swift in Sources */,

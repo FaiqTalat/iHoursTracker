@@ -35,13 +35,17 @@ class JobsListVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
         }
         
+        
+        
+        
+        
     }
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
         jobsListTVC.reloadData()
-        
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -53,7 +57,7 @@ class JobsListVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         self.view.addSubview(bgView)
         
         // for plus button
-        self.jobsListTVC.contentInset.bottom = 70
+        self.jobsListTVC.contentInset.bottom = 100
         
         createMenuObject()
     }
@@ -114,7 +118,7 @@ class JobsListVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     func getJobTypeTitleByIndex(index: NSNumber)->String{
         //iLog("index: \(index)")
-        return AddJobVC.rateTypeData[Int(index)]
+        return AddJobVC2.rateTypeData[Int(index)]
     }
     
     
